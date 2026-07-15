@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Marco de Referencia de Precios de Medicamentos en Colombia</title>
-<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal retail e institucional, concentración de mercado (HHI) y la reforma del reporte SISMED vía CUFE." />
+<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal comercial e institucional, concentración de mercado (HHI) y la reforma del reporte SISMED vía CUFE." />
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -21,10 +21,11 @@
       <button data-view="marco">Marco regulatorio</button>
       <button data-view="cascada">Cascada de precios</button>
       <button data-view="concentracion">Concentración (HHI)</button>
+      <button data-view="irp">Guía IRP</button>
       <button data-view="cufe">Reporte y CUFE</button>
       <button data-view="estrategias">Estrategias de pricing</button>
-      <button data-view="retail">Mercado retail</button>
-      <button data-view="institucional">Mercado institucional</button>
+      <button data-view="retail">Canal Comercial</button>
+      <button data-view="institucional">Canal Institucional</button>
       <button data-view="glosario">Glosario</button>
       <button data-view="referencias">Referencias</button>
     </nav>
@@ -73,11 +74,11 @@
         <p>Apalancamiento de portafolio, notas crédito por cuota de ventas, acuerdos de riesgo compartido y otras estrategias comerciales reales, conectadas al riesgo regulatorio colombiano.</p>
       </div>
       <div class="card">
-        <h3>Mercado retail</h3>
+        <h3>Canal Comercial</h3>
         <p>Droguistas, medicamentos OTC y gasto de bolsillo: el tramo de la cadena que paga directamente el hogar colombiano.</p>
       </div>
       <div class="card">
-        <h3>Mercado institucional</h3>
+        <h3>Canal Institucional</h3>
         <p>IPS, EPS, UPC y recobros: el tramo financiado por el sistema de salud, con sus propios márgenes de intermediación regulados.</p>
       </div>
     </div>
@@ -155,7 +156,7 @@
       <div class="hhi-table-wrap">
         <table class="hhi-table" id="hhi-table">
           <thead>
-            <tr><th>Actor</th><th>Participación (%)</th><th></th></tr>
+            <tr><th>Actor</th><th>Valor (ventas o unidades)</th><th>Participación</th><th></th></tr>
           </thead>
           <tbody id="hhi-table-body"></tbody>
         </table>
@@ -164,7 +165,6 @@
       <div class="hhi-result-wrap" id="hhi-result-wrap">
         <div class="hhi-stack" id="hhi-stack"></div>
         <div class="hhi-sum-note" id="hhi-sum-note"></div>
-        <button class="btn-normalize" id="hhi-normalize" style="display:none;">Normalizar a 100%</button>
         <div class="hhi-stat">
           <div class="hhi-stat-label">HHI calculado</div>
           <div class="hhi-stat-value" id="hhi-value">0</div>
@@ -181,6 +181,23 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- GUÍA IRP -->
+  <section class="view" id="view-irp">
+    <h2 class="section-title">Guía de referenciación internacional de precios (IRP)</h2>
+    <p class="section-sub" id="irp-intro"></p>
+
+    <div class="card-grid" id="irp-metodologia"></div>
+
+    <h2 class="section-title" style="margin-top:28px;">Canasta de 19 países y fuentes de precios</h2>
+    <div class="irp-table-wrap">
+      <table class="irp-table" id="irp-table">
+        <thead><tr><th>País</th><th>Fuente pública de precios</th></tr></thead>
+        <tbody id="irp-table-body"></tbody>
+      </table>
+    </div>
+    <p class="note-box" id="irp-nota"></p>
   </section>
 
   <!-- REPORTE Y CUFE -->
@@ -209,14 +226,14 @@
 
   <!-- RETAIL -->
   <section class="view" id="view-retail">
-    <h2 class="section-title">Mercado retail (comercial)</h2>
+    <h2 class="section-title">Canal Comercial (COM)</h2>
     <p class="section-sub" id="retail-intro"></p>
     <div class="card-grid" id="retail-puntos"></div>
   </section>
 
   <!-- INSTITUCIONAL -->
   <section class="view" id="view-institucional">
-    <h2 class="section-title">Mercado institucional</h2>
+    <h2 class="section-title">Canal Institucional (INS)</h2>
     <p class="section-sub" id="institucional-intro"></p>
     <div class="card-grid" id="institucional-puntos"></div>
   </section>

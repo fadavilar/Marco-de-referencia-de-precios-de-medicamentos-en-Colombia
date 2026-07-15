@@ -120,6 +120,32 @@ function renderHHIStatic() {
   document.getElementById("hhi-calc-texto").innerHTML = c.calculadora.texto;
 }
 
+function renderIRP() {
+  const g = DATA.irp;
+  document.getElementById("irp-intro").innerHTML = g.intro;
+
+  document.getElementById("irp-metodologia").innerHTML = g.metodologia
+    .map(
+      (m) => `
+      <div class="card">
+        <h3>${m.titulo}</h3>
+        <p>${m.texto}</p>
+      </div>`
+    )
+    .join("");
+
+  document.getElementById("irp-table-body").innerHTML = g.paises
+    .map((p) => {
+      const fuenteCell = p.url
+        ? `<a href="${p.url}" target="_blank" rel="noopener">${p.fuente}</a>`
+        : `<span class="irp-unverified">${p.fuente}</span>`;
+      return `<tr><td>${p.pais}</td><td>${fuenteCell}</td></tr>`;
+    })
+    .join("");
+
+  document.getElementById("irp-nota").innerHTML = g.nota;
+}
+
 function renderCufeStatic() {
   const d = DATA.reporteCufe;
   document.getElementById("cufe-intro").innerHTML = d.intro;
@@ -172,7 +198,11 @@ function renderEstrategias() {
             <p>${item.colombia}</p>
           </div>
         </div>
-        <a class="strategy-source" href="${item.fuente.url}" target="_blank" rel="noopener">Fuente: ${item.fuente.titulo} ↗</a>
+        ${
+          item.fuente
+            ? `<a class="strategy-source" href="${item.fuente.url}" target="_blank" rel="noopener">Fuente: ${item.fuente.titulo} ↗</a>`
+            : `<span class="strategy-source strategy-source-observed">Práctica comercial observada en el mercado colombiano — sin cita externa.</span>`
+        }
       </div>`
     )
     .join("");
@@ -225,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMercado("retail", "retail-intro", "retail-puntos");
   renderMercado("institucional", "institucional-intro", "institucional-puntos");
   renderHHIStatic();
+  renderIRP();
   renderCufeStatic();
   renderEstrategias();
   renderGlosario();

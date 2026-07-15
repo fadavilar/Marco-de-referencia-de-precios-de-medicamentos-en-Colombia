@@ -504,6 +504,34 @@ ul.ref-list li a { font-weight: 700; text-decoration: none; }
 ul.ref-list li a:hover { text-decoration: underline; }
 ul.ref-list li p { margin: 3px 0 0; color: var(--text-secondary); }
 
+/* ---------- Guía IRP ---------- */
+.irp-table-wrap {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 14px 0 10px;
+}
+table.irp-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.irp-table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gridline);
+}
+table.irp-table td {
+  padding: 10px 16px;
+  border-top: 1px solid var(--gridline);
+}
+table.irp-table tr:first-child td { border-top: none; }
+table.irp-table td:first-child { font-weight: 700; white-space: nowrap; }
+table.irp-table a { font-weight: 600; text-decoration: none; }
+table.irp-table a:hover { text-decoration: underline; }
+.irp-unverified { color: var(--text-muted); font-style: italic; }
+
 /* ---------- Threshold cards (HHI umbrales) ---------- */
 .threshold-row {
   display: grid;
@@ -548,7 +576,7 @@ table.hhi-table th {
   font-weight: 700;
 }
 table.hhi-table td { padding: 4px 8px; }
-.hhi-input-name, .hhi-input-share {
+.hhi-input-name, .hhi-input-valor {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -559,7 +587,14 @@ table.hhi-table td { padding: 4px 8px; }
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
-.hhi-input-share { width: 84px; }
+.hhi-input-valor { width: 100px; }
+.hhi-share-cell {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 .hhi-remove-btn {
   border: 1px solid var(--border);
   background: var(--surface-2);
@@ -614,20 +649,6 @@ table.hhi-table td { padding: 4px 8px; }
   margin-top: 8px;
 }
 .hhi-result-wrap.invalid .hhi-sum-note { color: var(--status-critical); }
-.hhi-result-wrap.invalid .hhi-sum-note strong { color: var(--status-critical); }
-.btn-normalize {
-  margin-top: 10px;
-  border: 1px solid var(--status-critical);
-  background: transparent;
-  color: var(--status-critical);
-  font-family: var(--font);
-  font-size: 12.5px;
-  font-weight: 700;
-  padding: 7px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.btn-normalize:hover { background: var(--status-critical); color: #fff; }
 .hhi-stat {
   margin-top: 20px;
   padding-top: 16px;
@@ -709,6 +730,8 @@ ul.ba-list strong { color: var(--text-primary); }
   letter-spacing: 0.03em;
 }
 .timeline-title { font-size: 14px; font-weight: 700; margin-top: 2px; }
+.timeline-title a { color: var(--text-primary); text-decoration-color: var(--border); }
+.timeline-title a:hover { color: var(--channel-retail); text-decoration-color: var(--channel-retail); }
 .timeline-body p { margin: 3px 0 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 
 /* ---------- Estrategias de pricing ---------- */
@@ -766,6 +789,7 @@ ul.ba-list strong { color: var(--text-primary); }
   color: var(--text-muted);
 }
 .strategy-source:hover { color: var(--channel-retail); text-decoration: underline; }
+.strategy-source-observed { font-style: italic; font-weight: 400; }
 
 footer.site {
   border-top: 1px solid var(--border);

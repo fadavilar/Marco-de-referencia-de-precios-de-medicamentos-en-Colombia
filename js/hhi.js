@@ -1,8 +1,10 @@
 // Calculadora interactiva del Índice de Herfindahl-Hirschman (HHI)
+// Se ingresan valores absolutos (ventas, unidades, cualquier magnitud comparable);
+// la participación (%) de cada actor se calcula automáticamente como su proporción
+// del total, así que siempre suma 100% por construcción — sin normalización manual.
 
 const HHI_CAT_VARS = ["--cat-1", "--cat-2", "--cat-3", "--cat-4", "--cat-5", "--cat-6", "--cat-7", "--cat-8"];
 const HHI_MAX_ROWS = 8;
-const HHI_SUM_TOLERANCE = 0.05;
 
 let hhiRows = [];
 
@@ -11,12 +13,11 @@ function hhiInitRows() {
 }
 
 function hhiCompute() {
-  const sum = hhiRows.reduce((acc, r) => acc + (Number(r.share) || 0), 0);
-  const hhi = hhiRows.reduce((acc, r) => {
-    const s = Number(r.share) || 0;
-    return acc + s * s;
-  }, 0);
-  return { sum, hhi: Math.round(hhi) };
+  const total = hhiRows.reduce((acc, r) => acc + (Number(r.valor) || 0), 0);
+  if (total <= 0) return { total: 0, hhi: 0, shares: hhiRows.map(() => 0) };
+  const shares = hhiRows.map((r) => ((Number(r.valor) || 0) / total) * 100);
+  const hhi = shares.reduce((acc, s) => acc + s * s, 0);
+  return { total, hhi: Math.round(hhi), shares };
 }
 
 function hhiClassifyGeneric(hhi) {
@@ -34,6 +35,8 @@ function hhiClassifyColombia(hhi) {
 function hhiRenderTable() {
   const tbody = document.getElementById("hhi-table-body");
   tbody.innerHTML = "";
+  const { shares } = hhiCompute();
+
   hhiRows.forEach((row, i) => {
     const tr = document.createElement("tr");
 
@@ -48,18 +51,22 @@ function hhiRenderTable() {
     });
     tdName.appendChild(inputName);
 
-    const tdShare = document.createElement("td");
-    const inputShare = document.createElement("input");
-    inputShare.type = "number";
-    inputShare.min = "0";
-    inputShare.max = "100";
-    inputShare.value = row.share;
-    inputShare.className = "hhi-input-share";
-    inputShare.addEventListener("input", (e) => {
-      hhiRows[i].share = parseFloat(e.target.value) || 0;
+    const tdValor = document.createElement("td");
+    const inputValor = document.createElement("input");
+    inputValor.type = "number";
+    inputValor.min = "0";
+    inputValor.value = row.valor;
+    inputValor.className = "hhi-input-valor";
+    inputValor.addEventListener("input", (e) => {
+      hhiRows[i].valor = parseFloat(e.target.value) || 0;
+      hhiRenderTable();
       hhiRenderResult();
     });
-    tdShare.appendChild(inputShare);
+    tdValor.appendChild(inputValor);
+
+    const tdShare = document.createElement("td");
+    tdShare.className = "hhi-share-cell";
+    tdShare.textContent = shares[i] ? shares[i].toFixed(1) + "%" : "—";
 
     const tdRemove = document.createElement("td");
     const btnRemove = document.createElement("button");
@@ -73,6 +80,7 @@ function hhiRenderTable() {
     tdRemove.appendChild(btnRemove);
 
     tr.appendChild(tdName);
+    tr.appendChild(tdValor);
     tr.appendChild(tdShare);
     tr.appendChild(tdRemove);
     tbody.appendChild(tr);
@@ -84,45 +92,42 @@ function hhiRenderTable() {
 }
 
 function hhiRenderResult() {
-  const { sum, hhi } = hhiCompute();
-  const rounded = Math.round(sum * 10) / 10;
-  const isValid = Math.abs(sum - 100) <= HHI_SUM_TOLERANCE;
+  const { total, hhi, shares } = hhiCompute();
 
   const stack = document.getElementById("hhi-stack");
   stack.innerHTML = "";
-  const total = sum > 0 ? sum : 1;
   hhiRows.forEach((row, i) => {
-    const share = Number(row.share) || 0;
+    const share = shares[i] || 0;
     if (share <= 0) return;
     const seg = document.createElement("div");
     seg.className = "hhi-segment";
-    seg.style.width = (share / total) * 100 + "%";
+    seg.style.width = share + "%";
     seg.style.background = `var(${HHI_CAT_VARS[i % HHI_CAT_VARS.length]})`;
-    seg.title = `${row.nombre}: ${share}%`;
+    seg.title = `${row.nombre}: ${share.toFixed(1)}%`;
     stack.appendChild(seg);
   });
 
   const sumNote = document.getElementById("hhi-sum-note");
   const resultWrap = document.getElementById("hhi-result-wrap");
-  const normalizeBtn = document.getElementById("hhi-normalize");
   const hhiValueEl = document.getElementById("hhi-value");
   const genericBadge = document.getElementById("hhi-badge-generico");
   const colombiaBadge = document.getElementById("hhi-badge-colombia");
 
-  resultWrap.classList.toggle("invalid", !isValid);
-  normalizeBtn.style.display = isValid ? "none" : "inline-block";
+  const totalLabel = Number.isInteger(total) ? total.toLocaleString("es-CO") : total.toLocaleString("es-CO", { maximumFractionDigits: 1 });
 
-  if (!isValid) {
-    sumNote.innerHTML = `<strong>Las participaciones deben sumar 100%</strong> para calcular el HHI — suma actual: ${rounded}%.`;
+  if (total <= 0) {
+    resultWrap.classList.add("invalid");
+    sumNote.innerHTML = `Ingresa al menos un valor mayor que cero para calcular el HHI.`;
     hhiValueEl.textContent = "—";
     genericBadge.className = "badge";
-    genericBadge.querySelector("span:last-child").textContent = "Ajusta las participaciones a 100%";
+    genericBadge.querySelector("span:last-child").textContent = "Sin datos";
     colombiaBadge.className = "badge";
-    colombiaBadge.querySelector("span:last-child").textContent = "Ajusta las participaciones a 100%";
+    colombiaBadge.querySelector("span:last-child").textContent = "Sin datos";
     return;
   }
 
-  sumNote.textContent = `Suma actual de participaciones: ${rounded}%.`;
+  resultWrap.classList.remove("invalid");
+  sumNote.innerHTML = `Total del mercado: <strong>${totalLabel}</strong> — cada participación (%) se calcula automáticamente sobre este total.`;
   hhiValueEl.textContent = hhi.toLocaleString("es-CO");
 
   const generic = hhiClassifyGeneric(hhi);
@@ -134,22 +139,6 @@ function hhiRenderResult() {
   colombiaBadge.querySelector("span:last-child").textContent = colombia.label;
 }
 
-function hhiNormalize() {
-  const sum = hhiRows.reduce((acc, r) => acc + (Number(r.share) || 0), 0);
-  if (sum <= 0) return;
-  let running = 0;
-  hhiRows.forEach((row, i) => {
-    if (i === hhiRows.length - 1) {
-      row.share = Math.round((100 - running) * 10) / 10;
-    } else {
-      const scaled = Math.round(((Number(row.share) || 0) / sum) * 1000) / 10;
-      row.share = scaled;
-      running += scaled;
-    }
-  });
-  hhiRenderAll();
-}
-
 function hhiRenderAll() {
   hhiRenderTable();
   hhiRenderResult();
@@ -159,9 +148,8 @@ function initHHI() {
   hhiInitRows();
   document.getElementById("hhi-add-row").addEventListener("click", () => {
     if (hhiRows.length >= HHI_MAX_ROWS) return;
-    hhiRows.push({ nombre: `Actor ${hhiRows.length + 1}`, share: 0 });
+    hhiRows.push({ nombre: `Actor ${hhiRows.length + 1}`, valor: 0 });
     hhiRenderAll();
   });
-  document.getElementById("hhi-normalize").addEventListener("click", hhiNormalize);
   hhiRenderAll();
 }

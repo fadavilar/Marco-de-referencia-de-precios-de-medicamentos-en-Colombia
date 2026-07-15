@@ -35,8 +35,8 @@ function renderCascadeControls() {
   const canalWrap = document.getElementById("canal-toggle");
   canalWrap.innerHTML = "";
   [
-    { id: "retail", label: "Retail (comercial)" },
-    { id: "institucional", label: "Institucional" },
+    { id: "retail", label: "Canal Comercial" },
+    { id: "institucional", label: "Canal Institucional" },
   ].forEach(({ id, label }) => {
     const btn = document.createElement("button");
     btn.textContent = label;

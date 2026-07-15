@@ -6,8 +6,10 @@ regímenes de libertad vigilada / libertad regulada / control directo), una **ca
 interactiva de 5 eslabones (P1 a P5)** — desde el precio de manufactura, invisible, hasta el
 precio al consumidor final o al sistema —, el **índice de concentración de mercado (HHI)** con
 calculadora interactiva, la reforma del reporte SISMED vía **factura electrónica (CUFE)**, y los
-dos grandes canales de mercado: **retail** (droguistas, medicamentos OTC, gasto de bolsillo) e
-**institucional** (IPS, EPS, UPC, recobros y márgenes de intermediación).
+los dos canales que usa la nomenclatura oficial de SISMED: **Canal Comercial** (droguistas,
+medicamentos OTC, gasto de bolsillo) y **Canal Institucional** (IPS, EPS, UPC, presupuestos
+máximos/recobro y márgenes de intermediación), además de una guía de referenciación
+internacional de precios (IRP) y las estrategias de pricing farmacéutico más usadas en la práctica.
 
 ## Usar
 
@@ -37,7 +39,7 @@ y visita `http://localhost:8844/`. También funciona con cualquier otro servidor
 
 ## La cascada de precios (P1 → P5)
 
-| Eslabón | Retail (comercial) | Institucional |
+| Eslabón | Canal Comercial | Canal Institucional |
 |---|---|---|
 | P1 | Precio de manufactura (PVL) — invisible | igual |
 | P2 | Precio al distribuidor mayorista | Precio al distribuidor / operador logístico |
