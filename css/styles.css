@@ -594,6 +594,7 @@ table.hhi-table td { padding: 4px 8px; }
   border-radius: var(--radius);
   padding: 18px;
 }
+.hhi-result-wrap.invalid { border-color: var(--status-critical); }
 .hhi-stack {
   display: flex;
   width: 100%;
@@ -612,6 +613,21 @@ table.hhi-table td { padding: 4px 8px; }
   color: var(--text-muted);
   margin-top: 8px;
 }
+.hhi-result-wrap.invalid .hhi-sum-note { color: var(--status-critical); }
+.hhi-result-wrap.invalid .hhi-sum-note strong { color: var(--status-critical); }
+.btn-normalize {
+  margin-top: 10px;
+  border: 1px solid var(--status-critical);
+  background: transparent;
+  color: var(--status-critical);
+  font-family: var(--font);
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-normalize:hover { background: var(--status-critical); color: #fff; }
 .hhi-stat {
   margin-top: 20px;
   padding-top: 16px;
@@ -695,6 +711,62 @@ ul.ba-list strong { color: var(--text-primary); }
 .timeline-title { font-size: 14px; font-weight: 700; margin-top: 2px; }
 .timeline-body p { margin: 3px 0 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 
+/* ---------- Estrategias de pricing ---------- */
+.strategy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 16px 0 34px;
+}
+.strategy-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.strategy-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin-bottom: 8px;
+}
+.strategy-head h3 { margin: 0 0 4px; font-size: 16px; }
+.strategy-resumen { margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
+.strategy-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--gridline);
+}
+.strategy-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.strategy-body p { margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+.strategy-body strong, .strategy-body em { color: var(--text-primary); }
+.strategy-source {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text-muted);
+}
+.strategy-source:hover { color: var(--channel-retail); text-decoration: underline; }
+
 footer.site {
   border-top: 1px solid var(--border);
   padding: 22px 0 40px;
@@ -710,4 +782,5 @@ footer.site {
   .hero h1 { font-size: 24px; }
   .hhi-layout { grid-template-columns: 1fr; }
   .before-after { grid-template-columns: 1fr; }
+  .strategy-body { grid-template-columns: 1fr; }
 }

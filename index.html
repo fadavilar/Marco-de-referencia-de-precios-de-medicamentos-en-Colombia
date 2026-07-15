@@ -22,6 +22,7 @@
       <button data-view="cascada">Cascada de precios</button>
       <button data-view="concentracion">Concentración (HHI)</button>
       <button data-view="cufe">Reporte y CUFE</button>
+      <button data-view="estrategias">Estrategias de pricing</button>
       <button data-view="retail">Mercado retail</button>
       <button data-view="institucional">Mercado institucional</button>
       <button data-view="glosario">Glosario</button>
@@ -49,7 +50,7 @@
     </div>
 
     <h2 class="section-title" style="margin-top:34px;">¿Qué vas a encontrar aquí?</h2>
-    <p class="section-sub">Seis maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el operativo.</p>
+    <p class="section-sub">Siete maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el comercial.</p>
     <div class="card-grid">
       <div class="card">
         <h3>Marco regulatorio</h3>
@@ -66,6 +67,10 @@
       <div class="card">
         <h3>Reporte y CUFE</h3>
         <p>Qué cambió con la Circular 021 de 2026: antes y después del reporte de precios a SISMED, ahora atado a la factura electrónica real.</p>
+      </div>
+      <div class="card">
+        <h3>Estrategias de pricing</h3>
+        <p>Apalancamiento de portafolio, notas crédito por cuota de ventas, acuerdos de riesgo compartido y otras estrategias comerciales reales, conectadas al riesgo regulatorio colombiano.</p>
       </div>
       <div class="card">
         <h3>Mercado retail</h3>
@@ -156,9 +161,10 @@
         </table>
         <button class="btn-add-row" id="hhi-add-row">+ Agregar actor</button>
       </div>
-      <div class="hhi-result-wrap">
+      <div class="hhi-result-wrap" id="hhi-result-wrap">
         <div class="hhi-stack" id="hhi-stack"></div>
         <div class="hhi-sum-note" id="hhi-sum-note"></div>
+        <button class="btn-normalize" id="hhi-normalize" style="display:none;">Normalizar a 100%</button>
         <div class="hhi-stat">
           <div class="hhi-stat-label">HHI calculado</div>
           <div class="hhi-stat-value" id="hhi-value">0</div>
@@ -192,6 +198,13 @@
 
     <h2 class="section-title">Línea de tiempo normativa</h2>
     <div class="timeline" id="cufe-timeline"></div>
+  </section>
+
+  <!-- ESTRATEGIAS DE PRICING -->
+  <section class="view" id="view-estrategias">
+    <h2 class="section-title">Estrategias de pricing farmacéutico</h2>
+    <p class="section-sub" id="estrategias-intro"></p>
+    <div class="strategy-list" id="estrategias-list"></div>
   </section>
 
   <!-- RETAIL -->

@@ -264,7 +264,9 @@ const DATA = {
       titulo: "Calculadora interactiva de HHI",
       texto: `Ingresa los actores de un mercado relevante ilustrativo (laboratorio/marca) y su
         participación de ventas en porcentaje. La calculadora suma los cuadrados en vivo y clasifica
-        el resultado con ambas escalas (internacional y CNPMDM).`,
+        el resultado con ambas escalas (internacional y CNPMDM). Las participaciones deben sumar
+        <strong>100%</strong> para que el HHI sea válido — si no cuadran, usa el botón "Normalizar a
+        100%" para escalarlas proporcionalmente.`,
       ejemplo: [
         { nombre: "Laboratorio A", share: 42 },
         { nombre: "Laboratorio B", share: 27 },
@@ -323,6 +325,130 @@ const DATA = {
       { fecha: "2024", numero: "Circular 19 de 2024", resumen: "Actualiza el Precio Máximo de Venta (Precio Techo) de los medicamentos ya sujetos a Control Directo." },
       { fecha: "2026", numero: "Circular 22 de 2026", resumen: "Una de las revisiones más amplias de precios techo en años: incorpora 33 mercados relevantes nuevos, modifica 22 ya regulados y ajusta 528 mercados por tasa de cambio (-7,4%)." },
       { fecha: "2026", numero: "Circular 021 de 2026", resumen: "Reforma integral del reporte SISMED: exige CUFE y valor bruto de factura. Publicada el 9 de junio de 2026 (Diario Oficial 53.517)." },
+    ],
+  },
+
+  // ---------------------------------------------------------------------
+  // ESTRATEGIAS DE PRICING FARMACÉUTICO
+  // ---------------------------------------------------------------------
+  estrategias: {
+    intro: `Frente a un precio de lista vigilado, comparado internacionalmente (IRP) y cada vez más
+      auditable factura por factura (Circular 021/2026), la industria no negocia solo subiendo o
+      bajando ese precio: usa estrategias comerciales que logran el descuento efectivo que el
+      mercado exige sin necesariamente mover el precio de lista reportado. Estas siete estrategias
+      son prácticas documentadas internacionalmente — algunas ya formalizadas en la política
+      colombiana, otras vigentes en la práctica comercial de la cadena.`,
+    items: [
+      {
+        nombre: "Apalancamiento de portafolio (bundling entre moléculas)",
+        categoria: "Portafolio",
+        resumen: "Se concentra el descuento en una molécula madura del portafolio para proteger el precio de lista de la innovadora.",
+        mecanismo: `Un mismo fabricante negocia varios productos —desde una molécula madura o
+          genérico propio hasta la innovación más reciente— como un solo paquete o "canasta". El
+          comprador (droguista, IPS, operador) obtiene un descuento atractivo sobre el conjunto,
+          pero el fabricante concentra la mayor parte de ese descuento en el producto maduro,
+          dejando el precio de lista de la molécula innovadora prácticamente intacto. Contratos de
+          portafolio de este tipo pasaron de involucrar 2 productos a agrupar rutinariamente entre
+          10 y 20 en una sola negociación.`,
+        colombia: `El precio de lista de la innovadora es justamente el que la CNPMDM usa como
+          insumo para el Precio Techo por comparación internacional (IRP) cuando el mercado está
+          bajo Control Directo. Mantenerlo estable, aunque el descuento real ocurra en la molécula
+          madura de la misma canasta, reduce el riesgo de que una baja de precio en Colombia se
+          use como referencia para bajar el precio en otros países de la canasta IRP.`,
+        fuente: { titulo: "Portfolio Contracting: The Power Move Reshaping Pharma Access (MMIT)", url: "https://www.mmitnetwork.com/thought-leadership/power-move-reshaping-pharma-access/" },
+      },
+      {
+        nombre: "Precio de lista vs. precio neto (descuentos confidenciales)",
+        categoria: "Portafolio",
+        resumen: "El precio de lista reportado se mantiene alto mientras el precio neto real, tras descuentos confidenciales, es sustancialmente menor.",
+        mecanismo: `El fabricante fija un precio de lista público, pero negocia descuentos y
+          bonificaciones confidenciales con cada comprador (plano, por volumen o por patrón de uso).
+          El precio neto — lo que realmente se paga — solo lo conocen las partes del contrato. La
+          brecha entre ambos se ha ampliado de forma sistemática en mercados con fijación de
+          precios por comparación internacional.`,
+        colombia: `Es precisamente la brecha que la Circular 021 de 2026 busca cerrar del lado del
+          reporte: al exigir el valor bruto de cada factura electrónica identificada por su CUFE,
+          SISMED puede, en teoría, distinguir mejor el precio de lista del precio neto real de cada
+          transacción — algo que antes dependía del autorreporte.`,
+        fuente: { titulo: "Does external reference pricing deliver what it promises? (PMC)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7058621/" },
+      },
+      {
+        nombre: "Notas crédito por cumplimiento de cuota de ventas",
+        categoria: "Retail",
+        resumen: "Planes comerciales que devuelven margen vía nota crédito retroactiva cuando el droguista o distribuidor cumple una meta de ventas.",
+        mecanismo: `El fabricante factura al precio de lista, pero ofrece un plan comercial donde,
+          si el distribuidor o droguista alcanza una cuota de ventas de una molécula innovadora (o
+          de una que no ha llegado a su meta), recibe una <strong>nota crédito</strong> retroactiva
+          equivalente a un descuento por volumen. La transacción original queda al precio pleno; el
+          ajuste llega después, fuera de esa factura — es el mecanismo detrás de lo que en la
+          industria se conoce como <em>rebate management</em> y <em>chargebacks</em>.`,
+        colombia: `Como la nota crédito se emite después de la factura original (la que ya lleva
+          CUFE bajo la Circular 021/2026), es un punto que vale la pena vigilar: si el ajuste no
+          se refleja en el reporte a SISMED con la misma trazabilidad que la factura inicial, puede
+          reabrir la misma brecha entre precio reportado y precio real que la reforma buscaba cerrar.`,
+        fuente: { titulo: "What is Pharmaceutical Rebate Management? (Enable)", url: "https://www.enable.com/resources/articles/what-is-pharmaceutical-rebate-management/" },
+      },
+      {
+        nombre: "Acuerdos de riesgo compartido / acceso administrado",
+        categoria: "Riesgo compartido",
+        resumen: "El pago se condiciona a resultados clínicos o a un tope de impacto presupuestal, no a un precio fijo por unidad.",
+        mecanismo: `También llamados <em>Managed Entry Agreements</em>: esquemas financieros
+          (acuerdos precio-volumen, con techos de gasto) o esquemas de desempeño (pago ligado al
+          resultado clínico real del paciente), usados sobre todo para medicamentos de alto costo
+          con incertidumbre clínica o de impacto presupuestal al momento del lanzamiento.`,
+        colombia: `Colombia tiene un modelo propio: los <strong>Acuerdos de Acceso Administrado
+          (AAA)</strong>, publicados por el Ministerio de Salud desde 2021 con fases de nominación,
+          negociación, formalización, implementación y evaluación entre el Ministerio, las EAPB y
+          los titulares de registro sanitario — pensados para reducir barreras de acceso a
+          tecnologías de alto costo o alto impacto presupuestal.`,
+        fuente: { titulo: "Modelo operativo de Acuerdos de Acceso Administrado — Minsalud", url: "https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VS/MET/modelo-operativo-acuerdos-acceso-administrado.pdf" },
+      },
+      {
+        nombre: "Precio diferenciado por indicación",
+        categoria: "Segmentación",
+        resumen: "El mismo medicamento tiene un descuento distinto según la indicación clínica en la que se usa, aunque el precio de lista no cambie.",
+        mecanismo: `Cuando un medicamento tiene varias indicaciones aprobadas con distinto valor
+          terapéutico o distinta población objetivo, el fabricante aplica descuentos diferentes
+          (vía rebate) según la indicación en la que efectivamente se use, manteniendo un único
+          precio de lista formal. Es más fácil de implementar como descuento diferencial que como
+          precio de lista distinto por indicación, por las limitaciones administrativas y de
+          trazabilidad de uso real.`,
+        colombia: `Exige poder identificar la indicación de uso a nivel de paciente (vía MIPRES u
+          otro mecanismo de prescripción), algo que hoy es más viable para tecnologías de alto
+          costo gestionadas individualmente que para medicamentos de uso masivo.`,
+        fuente: { titulo: "Indication-Based Pricing: The Simplest Explanation (Verpora)", url: "https://www.verpora.com/articles/indication-based-pricing" },
+      },
+      {
+        nombre: "Precio escalonado por capacidad de pago (tiered pricing)",
+        categoria: "Segmentación",
+        resumen: "El mismo producto se vende a precios distintos según el poder adquisitivo del mercado, sin que un precio bajo en un país erosione el precio en otro.",
+        mecanismo: `El fabricante fija precios más bajos en mercados de menor ingreso per cápita y
+          precios más altos en mercados de mayor ingreso, buscando maximizar acceso donde la
+          demanda es más sensible al precio sin sacrificar el precio en mercados que sí pueden
+          pagarlo más. Es la lógica detrás de los precios diferenciados de antirretrovirales y
+          antibióticos entre países de renta alta y baja.`,
+        colombia: `Es exactamente el mecanismo que la comparación internacional de precios (IRP)
+          pone en tensión: si Colombia está en la canasta de países de referencia de otro país con
+          mayor renta, un precio bajo negociado aquí por motivos de acceso puede terminar
+          exportándose como referencia a la baja en ese otro mercado — un incentivo más para que
+          el fabricante prefiera mover el precio neto (vía descuento) y no el precio de lista.`,
+        fuente: { titulo: "Differential Pricing for Pharmaceuticals (Wharton)", url: "https://faculty.wharton.upenn.edu/wp-content/uploads/2014/10/differential-pricing_3.pdf" },
+      },
+      {
+        nombre: "Modelos de suscripción (\"modelo Netflix\")",
+        categoria: "Riesgo compartido",
+        resumen: "Pago fijo periódico que desliga el ingreso del fabricante del volumen vendido, para no incentivar la sobreventa.",
+        mecanismo: `Usado sobre todo para antibióticos nuevos: el pagador (un sistema de salud o
+          asegurador) paga una suscripción fija que garantiza acceso al medicamento
+          independientemente de cuánto se use, en vez de pagar por unidad vendida. Busca resolver
+          la paradoja de que un buen antibiótico nuevo debe usarse poco (para preservar su eficacia
+          y frenar resistencia), lo que bajo un modelo de pago por volumen desincentiva la inversión
+          en desarrollarlo.`,
+        colombia: `Aún no tiene un desarrollo formal en la regulación colombiana de precios de
+          medicamentos, pero es relevante para la discusión de política de acceso a nuevos
+          antimicrobianos frente al problema de resistencia bacteriana.`,
+        fuente: { titulo: "Optimal subscription models to pay for antibiotics (PMC)", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9005781/" },
+      },
     ],
   },
 
@@ -432,6 +558,11 @@ const DATA = {
     { termino: "IPS", definicion: "Institución Prestadora de Servicios de Salud: hospitales, clínicas y demás prestadores del canal institucional." },
     { termino: "EPS", definicion: "Entidad Promotora de Salud: aseguradora responsable de garantizar el PBS a sus afiliados dentro del SGSSS." },
     { termino: "CUM", definicion: "Código Único de Medicamento: identificador oficial (INVIMA) de cada presentación comercial de un medicamento en Colombia." },
+    { termino: "Precio de lista vs. precio neto", definicion: "El precio de lista es el precio público formal; el precio neto es lo que realmente se paga tras rebates y descuentos, casi siempre confidenciales. La brecha entre ambos crece donde hay comparación internacional de precios (IRP)." },
+    { termino: "Rebate / Nota crédito", definicion: "Descuento retroactivo que un fabricante entrega a un distribuidor o droguista, típicamente por cumplir una meta de ventas, emitido después de la factura original en vez de como una rebaja del precio de lista." },
+    { termino: "Portfolio / bundle contracting", definicion: "Negociación de varios productos de un mismo fabricante (moléculas maduras e innovadoras) como un solo paquete, concentrando el descuento en los productos maduros para proteger el precio de lista de las innovadoras." },
+    { termino: "Managed Entry Agreement (MEA)", definicion: "Acuerdo entre fabricante y pagador que condiciona el precio o el pago a resultados clínicos (esquema de desempeño) o a un tope de impacto presupuestal (esquema financiero)." },
+    { termino: "Acuerdos de Acceso Administrado (AAA)", definicion: "Modelo colombiano de Managed Entry Agreement publicado por el Ministerio de Salud desde 2021, con fases de nominación, negociación, formalización, implementación y evaluación." },
   ],
 
   // ---------------------------------------------------------------------
@@ -469,6 +600,18 @@ const DATA = {
       items: [
         { titulo: "INVIMA — Código Único de Medicamentos (CUM)", nota: "Catálogo oficial de medicamentos vigentes en Colombia, disponible también en datos abiertos.", url: "https://www.datos.gov.co" },
         { titulo: "ADRES — Administradora de los Recursos del SGSSS", nota: "Gestión de UPC, recobros y presupuestos máximos.", url: "https://www.adres.gov.co" },
+      ],
+    },
+    {
+      categoria: "Estrategias de pricing farmacéutico",
+      items: [
+        { titulo: "Portfolio Contracting: The Power Move Reshaping Pharma Access (MMIT)", nota: "Apalancamiento de portafolio / bundling entre moléculas maduras e innovadoras.", url: "https://www.mmitnetwork.com/thought-leadership/power-move-reshaping-pharma-access/" },
+        { titulo: "Does external reference pricing deliver what it promises? (PMC)", nota: "Brecha entre precio de lista y precio neto, y su efecto sobre la comparación internacional de precios.", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7058621/" },
+        { titulo: "What is Pharmaceutical Rebate Management? (Enable)", nota: "Rebates y notas crédito por cumplimiento de metas de ventas.", url: "https://www.enable.com/resources/articles/what-is-pharmaceutical-rebate-management/" },
+        { titulo: "Modelo operativo de Acuerdos de Acceso Administrado — Minsalud", nota: "Documento técnico oficial del modelo colombiano de Managed Entry Agreements.", url: "https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VS/MET/modelo-operativo-acuerdos-acceso-administrado.pdf" },
+        { titulo: "Indication-Based Pricing: The Simplest Explanation (Verpora)", nota: "Precio diferenciado por indicación clínica.", url: "https://www.verpora.com/articles/indication-based-pricing" },
+        { titulo: "Differential Pricing for Pharmaceuticals (Wharton)", nota: "Precio escalonado por capacidad de pago entre países.", url: "https://faculty.wharton.upenn.edu/wp-content/uploads/2014/10/differential-pricing_3.pdf" },
+        { titulo: "Optimal subscription models to pay for antibiotics (PMC)", nota: "Modelos de suscripción (\"modelo Netflix\") para nuevos antibióticos.", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9005781/" },
       ],
     },
     {

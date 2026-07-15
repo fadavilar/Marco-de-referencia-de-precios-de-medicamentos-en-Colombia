@@ -149,6 +149,35 @@ function renderCufeStatic() {
     .join("");
 }
 
+function renderEstrategias() {
+  const e = DATA.estrategias;
+  document.getElementById("estrategias-intro").innerHTML = e.intro;
+
+  document.getElementById("estrategias-list").innerHTML = e.items
+    .map(
+      (item) => `
+      <div class="strategy-card">
+        <div class="strategy-head">
+          <span class="strategy-tag">${item.categoria}</span>
+          <h3>${item.nombre}</h3>
+          <p class="strategy-resumen">${item.resumen}</p>
+        </div>
+        <div class="strategy-body">
+          <div>
+            <div class="strategy-label">Cómo funciona</div>
+            <p>${item.mecanismo}</p>
+          </div>
+          <div>
+            <div class="strategy-label">En el contexto colombiano</div>
+            <p>${item.colombia}</p>
+          </div>
+        </div>
+        <a class="strategy-source" href="${item.fuente.url}" target="_blank" rel="noopener">Fuente: ${item.fuente.titulo} ↗</a>
+      </div>`
+    )
+    .join("");
+}
+
 function initNav() {
   const buttons = document.querySelectorAll("nav.tabs button");
   const views = document.querySelectorAll("section.view");
@@ -197,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMercado("institucional", "institucional-intro", "institucional-puntos");
   renderHHIStatic();
   renderCufeStatic();
+  renderEstrategias();
   renderGlosario();
   renderReferencias();
 

@@ -2,6 +2,7 @@
 
 const HHI_CAT_VARS = ["--cat-1", "--cat-2", "--cat-3", "--cat-4", "--cat-5", "--cat-6", "--cat-7", "--cat-8"];
 const HHI_MAX_ROWS = 8;
+const HHI_SUM_TOLERANCE = 0.05;
 
 let hhiRows = [];
 
@@ -84,6 +85,8 @@ function hhiRenderTable() {
 
 function hhiRenderResult() {
   const { sum, hhi } = hhiCompute();
+  const rounded = Math.round(sum * 10) / 10;
+  const isValid = Math.abs(sum - 100) <= HHI_SUM_TOLERANCE;
 
   const stack = document.getElementById("hhi-stack");
   stack.innerHTML = "";
@@ -100,24 +103,51 @@ function hhiRenderResult() {
   });
 
   const sumNote = document.getElementById("hhi-sum-note");
-  const rounded = Math.round(sum * 10) / 10;
-  if (Math.abs(sum - 100) > 0.5) {
-    sumNote.textContent = `Suma actual de participaciones: ${rounded}% (no tiene que ser exactamente 100% — la calculadora usa las proporciones relativas).`;
-  } else {
-    sumNote.textContent = `Suma actual de participaciones: ${rounded}%.`;
+  const resultWrap = document.getElementById("hhi-result-wrap");
+  const normalizeBtn = document.getElementById("hhi-normalize");
+  const hhiValueEl = document.getElementById("hhi-value");
+  const genericBadge = document.getElementById("hhi-badge-generico");
+  const colombiaBadge = document.getElementById("hhi-badge-colombia");
+
+  resultWrap.classList.toggle("invalid", !isValid);
+  normalizeBtn.style.display = isValid ? "none" : "inline-block";
+
+  if (!isValid) {
+    sumNote.innerHTML = `<strong>Las participaciones deben sumar 100%</strong> para calcular el HHI — suma actual: ${rounded}%.`;
+    hhiValueEl.textContent = "—";
+    genericBadge.className = "badge";
+    genericBadge.querySelector("span:last-child").textContent = "Ajusta las participaciones a 100%";
+    colombiaBadge.className = "badge";
+    colombiaBadge.querySelector("span:last-child").textContent = "Ajusta las participaciones a 100%";
+    return;
   }
 
-  document.getElementById("hhi-value").textContent = hhi.toLocaleString("es-CO");
+  sumNote.textContent = `Suma actual de participaciones: ${rounded}%.`;
+  hhiValueEl.textContent = hhi.toLocaleString("es-CO");
 
   const generic = hhiClassifyGeneric(hhi);
-  const genericBadge = document.getElementById("hhi-badge-generico");
   genericBadge.className = "badge " + generic.badge;
   genericBadge.querySelector("span:last-child").textContent = generic.label;
 
   const colombia = hhiClassifyColombia(hhi);
-  const colombiaBadge = document.getElementById("hhi-badge-colombia");
   colombiaBadge.className = "badge " + colombia.badge;
   colombiaBadge.querySelector("span:last-child").textContent = colombia.label;
+}
+
+function hhiNormalize() {
+  const sum = hhiRows.reduce((acc, r) => acc + (Number(r.share) || 0), 0);
+  if (sum <= 0) return;
+  let running = 0;
+  hhiRows.forEach((row, i) => {
+    if (i === hhiRows.length - 1) {
+      row.share = Math.round((100 - running) * 10) / 10;
+    } else {
+      const scaled = Math.round(((Number(row.share) || 0) / sum) * 1000) / 10;
+      row.share = scaled;
+      running += scaled;
+    }
+  });
+  hhiRenderAll();
 }
 
 function hhiRenderAll() {
@@ -132,5 +162,6 @@ function initHHI() {
     hhiRows.push({ nombre: `Actor ${hhiRows.length + 1}`, share: 0 });
     hhiRenderAll();
   });
+  document.getElementById("hhi-normalize").addEventListener("click", hhiNormalize);
   hhiRenderAll();
 }
