@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cascada de Precios de Medicamentos — Colombia</title>
+<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal retail e institucional, regímenes de regulación." />
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="site-header-inner">
+    <div class="brand">
+      <span class="brand-title" id="brand-title">Cascada de Precios — Colombia</span>
+      <span class="brand-sub">Congreso Internacional de Investigaciones · UniNavarra</span>
+    </div>
+    <nav class="tabs">
+      <button data-view="inicio" class="active">Inicio</button>
+      <button data-view="marco">Marco regulatorio</button>
+      <button data-view="cascada">Cascada de precios</button>
+      <button data-view="retail">Mercado retail</button>
+      <button data-view="institucional">Mercado institucional</button>
+      <button data-view="glosario">Glosario</button>
+      <button data-view="referencias">Referencias</button>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" title="Cambiar tema" aria-label="Cambiar tema">☾</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- INICIO -->
+  <section class="view active" id="view-inicio">
+    <div class="hero">
+      <h1 id="hero-title">Cascada de Precios de Medicamentos en Colombia</h1>
+      <p class="lead" id="hero-lead"></p>
+      <div class="disclaimer">
+        <strong>Aviso:</strong> herramienta con fines educativos y de divulgación académica,
+        desarrollada para el Congreso Internacional de Investigaciones — UniNavarra. Los
+        márgenes y valores usados en la calculadora de cascada son <strong>ilustrativos</strong>
+        y buscan explicar la lógica del sistema, no reproducir cifras oficiales vigentes. Para
+        datos regulatorios actuales, consulte las fuentes citadas en la sección Referencias.
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:34px;">¿Qué vas a encontrar aquí?</h2>
+    <p class="section-sub">Cuatro maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el operativo.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Marco regulatorio</h3>
+        <p>Quién regula, con qué instrumentos (CNPMDM, SISMED, Circular Única) y los tres regímenes de intervención: libertad vigilada, libertad regulada y control directo.</p>
+      </div>
+      <div class="card">
+        <h3>Cascada interactiva P1 → P5</h3>
+        <p>Simulador que muestra cómo un precio de manufactura invisible se transforma en precio al consumidor o precio reconocido por el sistema, según canal y régimen.</p>
+      </div>
+      <div class="card">
+        <h3>Mercado retail</h3>
+        <p>Droguistas, medicamentos OTC y gasto de bolsillo: el tramo de la cadena que paga directamente el hogar colombiano.</p>
+      </div>
+      <div class="card">
+        <h3>Mercado institucional</h3>
+        <p>IPS, EPS, UPC y recobros: el tramo financiado por el sistema de salud, con sus propios márgenes de intermediación regulados.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARCO REGULATORIO -->
+  <section class="view" id="view-marco">
+    <h2 class="section-title">Marco regulatorio</h2>
+    <p class="section-sub" id="marco-intro"></p>
+
+    <h2 class="section-title" style="margin-top:10px;">Pilares del sistema</h2>
+    <div class="card-grid" id="marco-pilares"></div>
+
+    <h2 class="section-title">Regímenes de regulación de precios</h2>
+    <p class="section-sub">La Comisión clasifica cada principio activo en uno de tres regímenes, según el nivel de riesgo de falla de mercado detectado.</p>
+    <div class="card-grid" id="marco-regimenes"></div>
+  </section>
+
+  <!-- CASCADA -->
+  <section class="view" id="view-cascada">
+    <h2 class="section-title">Cascada de precios interactiva</h2>
+    <p class="section-sub">
+      Ajusta el canal, el régimen regulatorio y el precio de manufactura (P1) para ver cómo se
+      construye el precio a lo largo de la cadena, eslabón por eslabón.
+    </p>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>Canal</label>
+        <div class="segmented" id="canal-toggle"></div>
+      </div>
+      <div class="control-group">
+        <label>Régimen de precios</label>
+        <div class="segmented" id="regimen-toggle"></div>
+      </div>
+      <div class="control-group">
+        <label>P1 — Precio de manufactura</label>
+        <div class="p1-input">
+          <span>COP $</span>
+          <input type="text" inputmode="numeric" id="p1-value" />
+        </div>
+      </div>
+    </div>
+
+    <div class="cascade-wrap">
+      <div class="cascade-chart" id="cascade-chart"></div>
+      <div class="cascade-labels" id="cascade-labels"></div>
+    </div>
+    <p class="note-box" id="margenes-nota"></p>
+
+    <h2 class="section-title">Qué significa cada eslabón</h2>
+    <div class="stage-detail" id="stage-detail"></div>
+  </section>
+
+  <!-- RETAIL -->
+  <section class="view" id="view-retail">
+    <h2 class="section-title">Mercado retail (comercial)</h2>
+    <p class="section-sub" id="retail-intro"></p>
+    <div class="card-grid" id="retail-puntos"></div>
+  </section>
+
+  <!-- INSTITUCIONAL -->
+  <section class="view" id="view-institucional">
+    <h2 class="section-title">Mercado institucional</h2>
+    <p class="section-sub" id="institucional-intro"></p>
+    <div class="card-grid" id="institucional-puntos"></div>
+  </section>
+
+  <!-- GLOSARIO -->
+  <section class="view" id="view-glosario">
+    <h2 class="section-title">Glosario</h2>
+    <p class="section-sub">Términos clave del sistema de regulación de precios de medicamentos en Colombia.</p>
+    <input type="search" class="glossary-search" id="glosario-search" placeholder="Buscar término (p. ej. UPC, PVL, SISMED)…" />
+    <dl class="glossary" id="glosario-list"></dl>
+  </section>
+
+  <!-- REFERENCIAS -->
+  <section class="view" id="view-referencias">
+    <h2 class="section-title">Referencias</h2>
+    <p class="section-sub">Fuentes oficiales para verificar normativa y cifras vigentes.</p>
+    <ul class="ref-list" id="referencias-list"></ul>
+  </section>
+
+</main>
+
+<footer class="site">
+  Contenido educativo — Congreso Internacional de Investigaciones, UniNavarra. No constituye asesoría regulatoria.
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cascade.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
