@@ -146,6 +146,74 @@ function renderIRP() {
   document.getElementById("irp-nota").innerHTML = g.nota;
 }
 
+function renderContratacion() {
+  const c = DATA.contratacion;
+  document.getElementById("contratacion-intro").innerHTML = c.intro;
+
+  document.getElementById("contratacion-modelos").innerHTML = c.modelos
+    .map(
+      (m) => `
+      <div class="card">
+        <h3>${m.nombre}</h3>
+        <p><strong>${m.resumen}</strong></p>
+        <p>${m.detalle}</p>
+      </div>`
+    )
+    .join("");
+
+  document.getElementById("arc-titulo").textContent = c.preguntasARC.titulo;
+  document.getElementById("arc-preguntas").innerHTML = c.preguntasARC.items
+    .map((q) => `<li>${q}</li>`)
+    .join("");
+
+  document.getElementById("contratacion-arquitectura").innerHTML = c.arquitecturaPagos
+    .map(
+      (a) => `
+      <div class="card">
+        <h3>${a.nombre}</h3>
+        <p>${a.texto}</p>
+      </div>`
+    )
+    .join("");
+
+  document.getElementById("contratacion-financiacion").innerHTML = `
+    <div class="card">
+      <h3>${c.financiacion.upc.titulo}</h3>
+      <p>${c.financiacion.upc.texto}</p>
+    </div>
+    <div class="card">
+      <h3>${c.financiacion.noUpc.titulo}</h3>
+      <p>${c.financiacion.noUpc.texto}</p>
+    </div>
+  `;
+
+  document.getElementById("recobro-titulo").textContent = c.financiacion.noUpc.proceso.titulo;
+  document.getElementById("recobro-pasos").innerHTML = c.financiacion.noUpc.proceso.pasos
+    .map((p) => `<li>${p}</li>`)
+    .join("");
+
+  document.getElementById("contratacion-transferencias").innerHTML = c.transferencias
+    .map(
+      (t) => `
+      <div class="card">
+        <span class="strategy-tag">Destinatario: ${t.destinatario}</span>
+        <h3>${t.nombre}</h3>
+        <p>${t.texto}</p>
+      </div>`
+    )
+    .join("");
+
+  document.getElementById("contratacion-privados").innerHTML = c.privados
+    .map(
+      (p) => `
+      <div class="card">
+        <h3>${p.nombre}</h3>
+        <p>${p.texto}</p>
+      </div>`
+    )
+    .join("");
+}
+
 function renderCufeStatic() {
   const d = DATA.reporteCufe;
   document.getElementById("cufe-intro").innerHTML = d.intro;
@@ -257,6 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHHIStatic();
   renderIRP();
   renderCufeStatic();
+  renderContratacion();
   renderEstrategias();
   renderGlosario();
   renderReferencias();

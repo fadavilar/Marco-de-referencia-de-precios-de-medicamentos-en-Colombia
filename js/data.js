@@ -678,6 +678,140 @@ const DATA = {
   },
 
   // ---------------------------------------------------------------------
+  // MODELOS DE CONTRATACIÓN Y PAGO EN SALUD
+  // Adaptado del mapa mental "Sistema de contratación y pago en salud para
+  // Colombia" (Fabian Dávila, XMind) — ver Referencias.
+  // ---------------------------------------------------------------------
+  contratacion: {
+    intro: `El precio de un medicamento es solo un insumo dentro de un sistema más amplio: cómo
+      la EPS le paga a la IPS, y cómo la ADRES le gira los recursos a la EPS, determina cuánto de
+      ese precio termina afectando de verdad el gasto en salud. Esta sección resume el sistema de
+      contratación y pago que envuelve al Canal Institucional — modelos de contratación,
+      arquitectura de pagos, cómo se financia lo UPC y lo NO-UPC en detalle, y los mecanismos de
+      transferencia de recursos entre ADRES, EPS e IPS.`,
+    modelos: [
+      {
+        nombre: "Capitación",
+        resumen: "Pago fijo por persona afiliada durante un período definido.",
+        detalle: `Se usa para servicios primarios, de baja complejidad, y actividades de promoción
+          y prevención. Su ventaja es la previsibilidad presupuestal y que incentiva la prevención
+          (el prestador gana más si mantiene sano al afiliado, no si lo trata más). Existen
+          variantes ajustadas por riesgo y modelos de capitación integral.`,
+      },
+      {
+        nombre: "Fee for Service (pago por servicio)",
+        resumen: "Cobro por cada servicio prestado, según tarifas predefinidas.",
+        detalle: `Aplica a procedimientos especializados, de alta complejidad, o eventos de bajo
+          volumen y alto costo. Las tarifas pueden basarse en manuales de referencia (SOAT, ISS),
+          negociarse directamente, o agruparse en paquetes de servicios.`,
+      },
+      {
+        nombre: "Modelos de riesgo compartido (ARC)",
+        resumen: "El pago se ajusta según cómo se comporte el costo o el resultado clínico real frente a lo esperado.",
+        detalle: `La gestión integral del riesgo es, en la práctica, un instrumento de planeación
+          pública para el acceso oportuno, efectivo y equitativo a los servicios del PBS. El riesgo
+          puede ser "al alza" (lo asume una sola parte) o "a dos caras" (se comparte). Los Acuerdos
+          de Riesgo Compartido (ARC) se dividen en <strong>acuerdos financieros</strong> (control de
+          costos por medicamento o tratamiento) y <strong>acuerdos basados en resultados
+          clínicos</strong> (el pago depende del desempeño observado) — con variantes como garantía
+          de desenlaces, continuidad condicionada al resultado, o cobertura mientras se genera más
+          evidencia. Están directamente relacionados con los Acuerdos de Acceso Administrado que se
+          describen en "Estrategias de pricing".`,
+      },
+    ],
+    preguntasARC: {
+      titulo: "Antes de implementar un ARC, siete preguntas",
+      items: [
+        "Análisis estratégico: ¿por qué este medicamento/tratamiento necesita un acuerdo de riesgo compartido y no un precio fijo?",
+        "Evaluación financiera: ¿cuál es el impacto presupuestal esperado y el rango de variación aceptable?",
+        "Aspectos clínicos y evidencia: ¿qué desenlaces se van a medir y con qué nivel de certeza?",
+        "Operatividad y cumplimiento: ¿quién registra, verifica y audita el resultado real?",
+        "Marco legal y contractual: ¿qué figura contractual sustenta el acuerdo dentro del SGSSS?",
+        "Evaluación de stakeholders: ¿qué gana y qué arriesga cada parte (fabricante, EPS, ADRES, paciente)?",
+        "Riesgos potenciales: ¿qué pasa si el resultado no se puede medir a tiempo o de forma confiable?",
+      ],
+    },
+    arquitecturaPagos: [
+      { nombre: "Pago por Capitación", texto: "Pago fijo por usuario, acordado por adelantado, para cubrir servicios de baja complejidad." },
+      { nombre: "Pago Global Prospectivo", texto: "Pago acordado por adelantado para cubrir los servicios de salud de un grupo de personas durante un período determinado, con estimación anticipada de costos, ajustes por complejidad y sistemas de monitoreo." },
+      { nombre: "Pago por Evento", texto: "Pago realizado después de la atención, con un monto fijo por cada servicio o tratamiento prestado." },
+      { nombre: "Pago por Paquete o Canasta", texto: "Pago acordado por adelantado que cubre un conjunto de servicios asociados a una atención — por ejemplo, un paquete quirúrgico completo." },
+      { nombre: "Pago por Desempeño o Resultados", texto: "El monto pagado depende del resultado clínico o del cumplimiento de metas observadas — la misma lógica de los Acuerdos de Riesgo Compartido aplicada a la arquitectura de pago." },
+    ],
+    financiacion: {
+      upc: {
+        titulo: "Financiación básica: UPC",
+        texto: `La Unidad de Pago por Capitación es la prima anual que financia el Plan de
+          Beneficios en Salud, en sus tres regímenes: <strong>Contributivo</strong>,
+          <strong>Subsidiado</strong> y regímenes <strong>especiales</strong> (Fuerzas Armadas,
+          docentes). Se ajusta por edad, género, ubicación geográfica y riesgo catastrófico. Se
+          distribuye por giro directo o indirecto (ver abajo) y está sujeta a la fiscalización de
+          la Superintendencia Nacional de Salud.`,
+      },
+      noUpc: {
+        titulo: "Financiación especializada: NO-UPC",
+        texto: `Cubre medicamentos no incluidos en el PBS, procedimientos no incluidos y terapias
+          innovadoras, gestionados vía ${A.mipres} y financiados por fondos de compensación. El
+          <strong>Presupuesto Máximo</strong> es, en términos simples, el tope anual que cada EPS
+          puede gastar en estas tecnologías no-PBS. El <strong>Sistema de Recobros</strong> sigue
+          siendo el mecanismo para recuperar ante la ADRES lo invertido en tecnologías no
+          financiadas con UPC — típicamente medicamentos para enfermedades huérfanas, terapias
+          innovadoras bajo protocolos especiales, o dispositivos e insumos de alto costo no-PBS.`,
+        proceso: {
+          titulo: "Proceso de recobro ante la ADRES",
+          pasos: [
+            "Prescripción registrada en MIPRES.",
+            "Autorización por parte de la EPS o de la ADRES.",
+            "Dispensación del medicamento y facturación del prestador o proveedor.",
+            "Radicación formal del recobro.",
+            "Pago dentro de los plazos legales — 60 días.",
+          ],
+        },
+      },
+    },
+    transferencias: [
+      {
+        nombre: "Giro Indirecto",
+        destinatario: "EPS",
+        texto: `Giros basados en la UPC, con retenciones por incumplimiento de hasta el
+          <strong>15%</strong> por criterios de calidad. Opera sobre una plataforma transaccional
+          unificada, con validación previa y avances programados — busca más control, trazabilidad
+          y priorización según criterios predefinidos que un giro genérico a la EPS.`,
+      },
+      {
+        nombre: "Giro Directo ADRES",
+        destinatario: "IPS o proveedor habilitado",
+        texto: `Transferencia directa desde la ADRES que omite a la EPS como intermediario. Para
+          UPC, aplica cuando la EPS carece de patrimonio técnico adecuado, está bajo vigilancia
+          especial, intervención o liquidación, o se acoge voluntariamente. Para presupuestos
+          máximos, la ADRES gira como mínimo el <strong>80%</strong> directamente a la IPS o al
+          proveedor. El objetivo declarado es reducir la intermediación y dar más trazabilidad al
+          giro.`,
+      },
+    ],
+    privados: [
+      {
+        nombre: "Medicina prepagada",
+        texto: `Contratos privados de acceso preferencial a una red de prestadores mediante pago
+          anticipado. No reemplaza la afiliación obligatoria al SGSSS: opera excluida de la UPC,
+          aunque puede interoperar con el sistema público para copagos o servicios no-PBS.`,
+      },
+      {
+        nombre: "Planes complementarios (EPS privadas)",
+        texto: `Pólizas que amplían la cobertura del PBS. Se financian de forma cruzada (UPC más
+          primas adicionales) y en algunos casos pueden gestionar tecnologías no-PBS vía MIPRES —
+          tampoco reemplazan la afiliación obligatoria al SGSSS.`,
+      },
+      {
+        nombre: "Pólizas de salud (aseguradoras tradicionales)",
+        texto: `Seguros privados independientes del SGSSS. Si el asegurado termina usando
+          servicios del PBS, pueden dar lugar a recobros al sistema — tampoco sustituyen la
+          afiliación obligatoria.`,
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------
   // GLOSARIO
   // ---------------------------------------------------------------------
   glosario: [
@@ -705,6 +839,10 @@ const DATA = {
     { termino: "RDA (Resumen Digital de Atención)", definicion: `Historia clínica interoperable a la que, desde la ${A.circular19_2026}, se trasladó el reporte de los medicamentos financiados con UPC (antes reportado por otra vía).` },
     { termino: "ADRES", definicion: "Administradora de los Recursos del Sistema General de Seguridad Social en Salud: entidad que administra los recursos del sistema, incluidos la UPC, los presupuestos máximos y los recobros." },
     { termino: "PISIS", definicion: `Plataforma de Intercambio de Información de SISPRO: el canal técnico por el que las entidades reportan sus archivos (incluido SISMED) al Ministerio de Salud, con validación de estructura y de calidad del contenido. Más información: ${A.pisis}.` },
+    { termino: "ARC (Acuerdo de Riesgo Compartido)", definicion: "Contrato entre pagador y proveedor donde el pago se ajusta según el costo o el resultado clínico real frente a lo esperado; puede ser financiero (control de costos) o basado en resultados clínicos (pago según desempeño)." },
+    { termino: "Giro Directo (ADRES)", definicion: "Transferencia de recursos que la ADRES hace directamente a la IPS o al proveedor, sin pasar por la EPS — obligatorio en ciertos escenarios (EPS sin patrimonio técnico adecuado, en intervención) y, para presupuestos máximos, en al menos el 80% del monto." },
+    { termino: "Giro Indirecto", definicion: "Transferencia de recursos de la UPC hacia la EPS, con retenciones de hasta el 15% por incumplimiento de criterios de calidad, sobre una plataforma transaccional unificada." },
+    { termino: "Fee for Service", definicion: "Modelo de pago por servicio: se cobra cada procedimiento o evento según una tarifa predefinida (manual de referencia, tarifa negociada o paquete de servicios) — típico de la atención especializada de alta complejidad." },
     { termino: "Margen de intermediación", definicion: "Sobreprecio acumulado por cada capa de la cadena de distribución (distribuidor, operador logístico, IPS) entre el precio de manufactura y el precio final reconocido." },
     { termino: "Gasto de bolsillo (out-of-pocket)", definicion: "Pago que realiza directamente el hogar por medicamentos no cubiertos, excluidos del PBS, o de venta libre (OTC)." },
     { termino: "OTC (venta libre)", definicion: "Medicamentos que no requieren fórmula médica y se comercializan directamente al consumidor en el Canal Comercial." },
@@ -777,6 +915,12 @@ const DATA = {
       categoria: "Análisis y prensa especializada (no oficial)",
       items: [
         { titulo: "CONSULTORSALUD — Circular 021 explicada", nota: "Análisis periodístico en lenguaje claro de la reforma del reporte SISMED. Fuente secundaria: para el texto con fuerza normativa, use la circular oficial.", url: "https://consultorsalud.com/circular-21-sismed-precios-medicamentos/" },
+      ],
+    },
+    {
+      categoria: "Recursos del autor",
+      items: [
+        { titulo: "Sistema de contratación y pago en salud para Colombia (mapa mental — Fabian Dávila, XMind)", nota: "Mapa mental original del autor: modelos de contratación, arquitectura de pagos, financiación UPC/NO-UPC y mecanismos de giro. Base de la sección \"Contratación y pago\" de esta app. Elaboración propia, no es una fuente oficial.", url: "https://xmind.app/mindmap/sistema-de-contratacion-y-pago-en-salud-para-colombia/cYh46M/?from=gallery" },
       ],
     },
   ],

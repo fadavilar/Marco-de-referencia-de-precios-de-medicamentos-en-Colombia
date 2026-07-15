@@ -23,6 +23,7 @@
       <button data-view="concentracion">Concentración (HHI)</button>
       <button data-view="irp">Guía IRP</button>
       <button data-view="cufe">Reporte y CUFE</button>
+      <button data-view="contratacion">Contratación y Pago</button>
       <button data-view="estrategias">Estrategias de pricing</button>
       <button data-view="retail">Canal Comercial</button>
       <button data-view="institucional">Canal Institucional</button>
@@ -51,7 +52,7 @@
     </div>
 
     <h2 class="section-title" style="margin-top:34px;">¿Qué vas a encontrar aquí?</h2>
-    <p class="section-sub">Siete maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el comercial.</p>
+    <p class="section-sub">Nueve maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el comercial.</p>
     <div class="card-grid">
       <div class="card">
         <h3>Marco regulatorio</h3>
@@ -66,8 +67,16 @@
         <p>El índice de Herfindahl-Hirschman explicado desde su origen académico hasta su uso real en la Circular 18 de 2024 para clasificar mercados. Con calculadora interactiva.</p>
       </div>
       <div class="card">
+        <h3>Guía IRP</h3>
+        <p>Los 19 países de la canasta de referencia internacional de precios (Circular 18/2024), con enlace a la fuente pública de precios de cada uno.</p>
+      </div>
+      <div class="card">
         <h3>Reporte y CUFE</h3>
         <p>Qué cambió con la Circular 021 de 2026: antes y después del reporte de precios a SISMED, ahora atado a la factura electrónica real.</p>
+      </div>
+      <div class="card">
+        <h3>Contratación y Pago</h3>
+        <p>Capitación, fee-for-service, acuerdos de riesgo compartido, giro directo/indirecto y el proceso completo de recobro ante la ADRES.</p>
       </div>
       <div class="card">
         <h3>Estrategias de pricing</h3>
@@ -215,6 +224,39 @@
 
     <h2 class="section-title">Línea de tiempo normativa</h2>
     <div class="timeline" id="cufe-timeline"></div>
+  </section>
+
+  <!-- CONTRATACIÓN Y PAGO -->
+  <section class="view" id="view-contratacion">
+    <h2 class="section-title">Contratación y pago en salud</h2>
+    <p class="section-sub" id="contratacion-intro"></p>
+
+    <h2 class="section-title" style="margin-top:10px;">Modelos de contratación</h2>
+    <div class="card-grid" id="contratacion-modelos"></div>
+
+    <div class="steps-card">
+      <h3 id="arc-titulo"></h3>
+      <ol class="steps-list" id="arc-preguntas"></ol>
+    </div>
+
+    <h2 class="section-title" style="margin-top:28px;">Arquitectura de pagos</h2>
+    <p class="section-sub">Formas concretas en que se estructura el pago entre pagador y prestador, independientes del modelo de contratación general.</p>
+    <div class="card-grid" id="contratacion-arquitectura"></div>
+
+    <h2 class="section-title" style="margin-top:28px;">Financiación: UPC vs. NO-UPC</h2>
+    <div class="card-grid" id="contratacion-financiacion"></div>
+
+    <div class="steps-card">
+      <h3 id="recobro-titulo"></h3>
+      <ol class="steps-list" id="recobro-pasos"></ol>
+    </div>
+
+    <h2 class="section-title" style="margin-top:28px;">Mecanismos de transferencia de recursos</h2>
+    <div class="card-grid" id="contratacion-transferencias"></div>
+
+    <h2 class="section-title" style="margin-top:28px;">Mecanismos privados de financiamiento</h2>
+    <p class="section-sub">Ninguno de estos reemplaza la afiliación obligatoria al SGSSS — operan en paralelo o de forma complementaria.</p>
+    <div class="card-grid" id="contratacion-privados"></div>
   </section>
 
   <!-- ESTRATEGIAS DE PRICING -->

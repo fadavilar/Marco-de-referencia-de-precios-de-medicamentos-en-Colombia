@@ -734,6 +734,48 @@ ul.ba-list strong { color: var(--text-primary); }
 .timeline-title a:hover { color: var(--channel-retail); text-decoration-color: var(--channel-retail); }
 .timeline-body p { margin: 3px 0 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 
+/* ---------- Contratación y pago: pasos numerados ---------- */
+.steps-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 18px 0 10px;
+}
+.steps-card h3 { margin: 0 0 12px; font-size: 14.5px; }
+ol.steps-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step-counter;
+}
+ol.steps-list li {
+  counter-increment: step-counter;
+  position: relative;
+  padding: 8px 0 8px 34px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  border-top: 1px solid var(--gridline);
+}
+ol.steps-list li:first-child { border-top: none; }
+ol.steps-list li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--channel-retail);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ---------- Estrategias de pricing ---------- */
 .strategy-list {
   display: flex;
