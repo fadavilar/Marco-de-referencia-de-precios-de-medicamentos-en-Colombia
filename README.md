@@ -1,14 +1,13 @@
-# Cascada de Precios de Medicamentos — Colombia
+# Marco de Referencia de Precios de Medicamentos en Colombia
 
 App web autocontenida (HTML/CSS/JS, sin build ni backend) para explorar el marco de política de
-precios de medicamentos en Colombia: marco regulatorio (CNPMDM, SISMED, Circular Única,
+precios de medicamentos en Colombia: marco regulatorio (CNPMDM, SISMED, circulares vigentes,
 regímenes de libertad vigilada / libertad regulada / control directo), una **cascada de precios
 interactiva de 5 eslabones (P1 a P5)** — desde el precio de manufactura, invisible, hasta el
-precio al consumidor final o al sistema — y los dos grandes canales de mercado: **retail**
-(droguistas, medicamentos OTC, gasto de bolsillo) e **institucional** (IPS, EPS, UPC, recobros y
-márgenes de intermediación).
-
-Desarrollada para el Congreso Internacional de Investigaciones — UniNavarra.
+precio al consumidor final o al sistema —, el **índice de concentración de mercado (HHI)** con
+calculadora interactiva, la reforma del reporte SISMED vía **factura electrónica (CUFE)**, y los
+dos grandes canales de mercado: **retail** (droguistas, medicamentos OTC, gasto de bolsillo) e
+**institucional** (IPS, EPS, UPC, recobros y márgenes de intermediación).
 
 ## Usar
 
@@ -27,10 +26,12 @@ y visita `http://localhost:8844/`. También funciona con cualquier otro servidor
 - `index.html` — estructura de la app (navegación por pestañas, contenedores para cada sección).
 - `css/styles.css` — paleta de color (modo claro/oscuro) y estilos de todos los componentes.
 - `js/data.js` — todo el contenido editorial: marco regulatorio, definiciones de los 5 eslabones
-  de la cascada por canal, márgenes ilustrativos por régimen × canal, glosario y referencias.
-  **Este es el archivo a editar si quieres actualizar cifras, textos o fuentes.**
+  de la cascada por canal, márgenes ilustrativos, concentración de mercado (HHI), reforma CUFE,
+  glosario y referencias. **Este es el archivo a editar si quieres actualizar cifras, textos o
+  fuentes.**
 - `js/cascade.js` — lógica de la calculadora de cascada (P1 → P5): renderiza el gráfico y aplica
   los márgenes según el canal y el régimen seleccionados.
+- `js/hhi.js` — lógica de la calculadora interactiva del Índice de Herfindahl-Hirschman.
 - `js/app.js` — navegación por pestañas, tema claro/oscuro y render del resto del contenido.
 - `serve.ps1` — servidor HTTP estático mínimo (PowerShell), igual que en `app/serve.ps1`.
 
@@ -49,6 +50,19 @@ Regulada / Control Directo) son **ilustrativos**: buscan mostrar la lógica de l
 mayor intervención regulatoria, menor margen acumulado, especialmente en el canal institucional),
 no reproducir cifras oficiales vigentes. Editables en `DATA.margenes` dentro de `js/data.js`.
 
+## Concentración de mercado (HHI) y reforma CUFE
+
+Dos secciones con contenido verificado contra fuentes oficiales (julio de 2026):
+
+- **Concentración (HHI)**: el Índice de Herfindahl-Hirschman explicado desde su origen académico
+  (Hirschman 1945, Herfindahl 1950) hasta su uso real y verificado en la Circular 18 de 2024 de la
+  CNPMDM, que lo usa para clasificar mercados relevantes en régimen de precios. Incluye una
+  calculadora interactiva.
+- **Reporte y CUFE**: qué cambió con la Circular Externa 021 de 2026 (9 de junio de 2026) en el
+  reporte a SISMED — ahora cada registro debe citar el Código Único de Factura Electrónica (CUFE)
+  de la DIAN y reportar el valor bruto real de la factura, en vez de un precio autorreportado sin
+  verificación cruzada.
+
 ## Publicar en GitHub Pages
 
 1. Sube esta carpeta (o todo el repositorio) a GitHub.
@@ -58,7 +72,7 @@ no reproducir cifras oficiales vigentes. Editables en `DATA.margenes` dentro de 
 
 ## Aviso
 
-Herramienta con fines educativos y de divulgación académica. No constituye asesoría regulatoria
-ni refleja precios oficiales vigentes; para normativa y cifras actuales, consulta las fuentes
-oficiales listadas en la sección "Referencias" dentro de la app (Ministerio de Salud, CNPMDM,
-SISMED, INVIMA, ADRES).
+Herramienta educativa y de divulgación regulatoria. No constituye asesoría legal ni regulatoria;
+para normativa y cifras actuales, consulta las fuentes oficiales listadas en la sección
+"Referencias" dentro de la app (Ministerio de Salud, CNPMDM, SISMED, INVIMA, ADRES) — la CNPMDM
+actualiza circulares con frecuencia, así que confirma siempre la versión vigente.

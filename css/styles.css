@@ -31,6 +31,16 @@
   --status-warning:  #fab219;
   --status-critical: #d03b3b;
 
+  /* categórico — identidad de actores (calculadora HHI) */
+  --cat-1: #2a78d6; /* blue */
+  --cat-2: #1baf7a; /* aqua */
+  --cat-3: #eda100; /* yellow */
+  --cat-4: #008300; /* green */
+  --cat-5: #4a3aa7; /* violet */
+  --cat-6: #e34948; /* red */
+  --cat-7: #e87ba4; /* magenta */
+  --cat-8: #eb6834; /* orange */
+
   --radius: 10px;
   --font: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -60,6 +70,15 @@
     --status-good:     #0ca30c;
     --status-warning:  #fab219;
     --status-critical: #d03b3b;
+
+    --cat-1: #3987e5;
+    --cat-2: #199e70;
+    --cat-3: #c98500;
+    --cat-4: #008300;
+    --cat-5: #9085e9;
+    --cat-6: #e66767;
+    --cat-7: #d55181;
+    --cat-8: #d95926;
   }
 }
 :root[data-theme="dark"] {
@@ -82,6 +101,15 @@
   --p3: #3987e5;
   --p4: #256abf;
   --p5: #184f95;
+
+  --cat-1: #3987e5;
+  --cat-2: #199e70;
+  --cat-3: #c98500;
+  --cat-4: #008300;
+  --cat-5: #9085e9;
+  --cat-6: #e66767;
+  --cat-7: #d55181;
+  --cat-8: #d95926;
 }
 
 * { box-sizing: border-box; }
@@ -457,6 +485,15 @@ dl.glossary .entry {
 dl.glossary dt { font-weight: 700; font-size: 13.5px; margin-bottom: 3px; }
 dl.glossary dd { margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 
+.ref-group-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin: 26px 0 4px;
+}
+.ref-group-title:first-child { margin-top: 0; }
+
 ul.ref-list { list-style: none; margin: 0; padding: 0; }
 ul.ref-list li {
   padding: 13px 0;
@@ -466,6 +503,197 @@ ul.ref-list li {
 ul.ref-list li a { font-weight: 700; text-decoration: none; }
 ul.ref-list li a:hover { text-decoration: underline; }
 ul.ref-list li p { margin: 3px 0 0; color: var(--text-secondary); }
+
+/* ---------- Threshold cards (HHI umbrales) ---------- */
+.threshold-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 14px 0 20px;
+}
+.threshold-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gridline);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.threshold-card.good     { border-left-color: var(--status-good); }
+.threshold-card.warning  { border-left-color: var(--status-warning); }
+.threshold-card.critical { border-left-color: var(--status-critical); }
+.threshold-card p { margin: 8px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+/* ---------- HHI calculator ---------- */
+.hhi-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+.hhi-table-wrap {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+table.hhi-table { width: 100%; border-collapse: collapse; }
+table.hhi-table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: 0 8px 8px;
+  font-weight: 700;
+}
+table.hhi-table td { padding: 4px 8px; }
+.hhi-input-name, .hhi-input-share {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 9px;
+  font-family: var(--font);
+  font-size: 13px;
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.hhi-input-share { width: 84px; }
+.hhi-remove-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+.hhi-remove-btn:hover { color: var(--status-critical); }
+.btn-add-row {
+  margin-top: 12px;
+  border: 1px dashed var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+.btn-add-row:hover { background: var(--surface-2); }
+.btn-add-row:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.hhi-result-wrap {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.hhi-stack {
+  display: flex;
+  width: 100%;
+  height: 28px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.hhi-segment {
+  height: 100%;
+  border-right: 2px solid var(--surface-card);
+}
+.hhi-segment:last-child { border-right: none; }
+.hhi-sum-note {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+.hhi-stat {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gridline);
+}
+.hhi-stat-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+.hhi-stat-value {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: proportional-nums;
+}
+.hhi-badges {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hhi-badge-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+/* ---------- Before / after (CUFE) ---------- */
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 18px 0;
+}
+.ba-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+ul.ba-list {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+ul.ba-list li { margin-bottom: 8px; }
+ul.ba-list li:last-child { margin-bottom: 0; }
+ul.ba-list strong { color: var(--text-primary); }
+
+/* ---------- Timeline ---------- */
+.timeline {
+  position: relative;
+  margin: 18px 0 34px;
+  padding-left: 18px;
+  border-left: 2px solid var(--gridline);
+}
+.timeline-item { position: relative; padding-bottom: 20px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -23px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--channel-retail);
+  border: 2px solid var(--surface-2);
+}
+.timeline-year {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.timeline-title { font-size: 14px; font-weight: 700; margin-top: 2px; }
+.timeline-body p { margin: 3px 0 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 
 footer.site {
   border-top: 1px solid var(--border);
@@ -480,4 +708,6 @@ footer.site {
   .cascade-chart, .cascade-labels { grid-template-columns: repeat(5, minmax(56px, 1fr)); }
   .cascade-chart { overflow-x: auto; }
   .hero h1 { font-size: 24px; }
+  .hhi-layout { grid-template-columns: 1fr; }
+  .before-after { grid-template-columns: 1fr; }
 }

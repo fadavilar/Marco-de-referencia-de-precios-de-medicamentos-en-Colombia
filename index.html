@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cascada de Precios de Medicamentos — Colombia</title>
-<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal retail e institucional, regímenes de regulación." />
+<title>Marco de Referencia de Precios de Medicamentos en Colombia</title>
+<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal retail e institucional, concentración de mercado (HHI) y la reforma del reporte SISMED vía CUFE." />
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -13,13 +13,15 @@
 <header class="site">
   <div class="site-header-inner">
     <div class="brand">
-      <span class="brand-title" id="brand-title">Cascada de Precios — Colombia</span>
-      <span class="brand-sub">Congreso Internacional de Investigaciones · UniNavarra</span>
+      <span class="brand-title" id="brand-title">Marco de Referencia de Precios — Colombia</span>
+      <span class="brand-sub">Herramienta educativa de divulgación regulatoria</span>
     </div>
     <nav class="tabs">
       <button data-view="inicio" class="active">Inicio</button>
       <button data-view="marco">Marco regulatorio</button>
       <button data-view="cascada">Cascada de precios</button>
+      <button data-view="concentracion">Concentración (HHI)</button>
+      <button data-view="cufe">Reporte y CUFE</button>
       <button data-view="retail">Mercado retail</button>
       <button data-view="institucional">Mercado institucional</button>
       <button data-view="glosario">Glosario</button>
@@ -34,27 +36,36 @@
   <!-- INICIO -->
   <section class="view active" id="view-inicio">
     <div class="hero">
-      <h1 id="hero-title">Cascada de Precios de Medicamentos en Colombia</h1>
+      <h1 id="hero-title">Marco de Referencia de Precios de Medicamentos en Colombia</h1>
       <p class="lead" id="hero-lead"></p>
       <div class="disclaimer">
-        <strong>Aviso:</strong> herramienta con fines educativos y de divulgación académica,
-        desarrollada para el Congreso Internacional de Investigaciones — UniNavarra. Los
+        <strong>Aviso:</strong> herramienta educativa y de divulgación regulatoria. Los
         márgenes y valores usados en la calculadora de cascada son <strong>ilustrativos</strong>
-        y buscan explicar la lógica del sistema, no reproducir cifras oficiales vigentes. Para
-        datos regulatorios actuales, consulte las fuentes citadas en la sección Referencias.
+        y buscan explicar la lógica del sistema, no reproducir cifras oficiales vigentes. El resto
+        del contenido está respaldado por las fuentes citadas en la sección Referencias — revise
+        siempre la norma vigente antes de tomar decisiones, porque la CNPMDM actualiza circulares
+        con frecuencia.
       </div>
     </div>
 
     <h2 class="section-title" style="margin-top:34px;">¿Qué vas a encontrar aquí?</h2>
-    <p class="section-sub">Cuatro maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el operativo.</p>
+    <p class="section-sub">Seis maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el operativo.</p>
     <div class="card-grid">
       <div class="card">
         <h3>Marco regulatorio</h3>
-        <p>Quién regula, con qué instrumentos (CNPMDM, SISMED, Circular Única) y los tres regímenes de intervención: libertad vigilada, libertad regulada y control directo.</p>
+        <p>Quién regula, con qué instrumentos (CNPMDM, SISMED, circulares) y los tres regímenes de intervención: libertad vigilada, libertad regulada y control directo.</p>
       </div>
       <div class="card">
         <h3>Cascada interactiva P1 → P5</h3>
         <p>Simulador que muestra cómo un precio de manufactura invisible se transforma en precio al consumidor o precio reconocido por el sistema, según canal y régimen.</p>
+      </div>
+      <div class="card">
+        <h3>Concentración de mercado (HHI)</h3>
+        <p>El índice de Herfindahl-Hirschman explicado desde su origen académico hasta su uso real en la Circular 18 de 2024 para clasificar mercados. Con calculadora interactiva.</p>
+      </div>
+      <div class="card">
+        <h3>Reporte y CUFE</h3>
+        <p>Qué cambió con la Circular 021 de 2026: antes y después del reporte de precios a SISMED, ahora atado a la factura electrónica real.</p>
       </div>
       <div class="card">
         <h3>Mercado retail</h3>
@@ -76,7 +87,7 @@
     <div class="card-grid" id="marco-pilares"></div>
 
     <h2 class="section-title">Regímenes de regulación de precios</h2>
-    <p class="section-sub">La Comisión clasifica cada principio activo en uno de tres regímenes, según el nivel de riesgo de falla de mercado detectado.</p>
+    <p class="section-sub">La Comisión clasifica cada mercado relevante en uno de tres regímenes, según el nivel de concentración y riesgo de falla de mercado detectado.</p>
     <div class="card-grid" id="marco-regimenes"></div>
   </section>
 
@@ -116,6 +127,73 @@
     <div class="stage-detail" id="stage-detail"></div>
   </section>
 
+  <!-- CONCENTRACIÓN DE MERCADO (HHI) -->
+  <section class="view" id="view-concentracion">
+    <h2 class="section-title">Concentración de mercado — Índice de Herfindahl-Hirschman</h2>
+    <p class="section-sub" id="hhi-intro"></p>
+
+    <div class="card-grid" id="hhi-academico"></div>
+
+    <h2 class="section-title">Umbrales de referencia internacional</h2>
+    <p class="section-sub" id="hhi-umbrales-generico-texto"></p>
+    <div class="threshold-row" id="hhi-umbrales-generico"></div>
+
+    <h2 class="section-title" style="margin-top:28px;">Los umbrales que usa la CNPMDM</h2>
+    <p class="section-sub" id="hhi-umbrales-colombia-texto"></p>
+    <div class="threshold-row" id="hhi-umbrales-colombia"></div>
+    <p class="note-box" id="hhi-umbrales-nota"></p>
+
+    <h2 class="section-title" style="margin-top:28px;">Calculadora interactiva</h2>
+    <p class="section-sub" id="hhi-calc-texto"></p>
+
+    <div class="hhi-layout">
+      <div class="hhi-table-wrap">
+        <table class="hhi-table" id="hhi-table">
+          <thead>
+            <tr><th>Actor</th><th>Participación (%)</th><th></th></tr>
+          </thead>
+          <tbody id="hhi-table-body"></tbody>
+        </table>
+        <button class="btn-add-row" id="hhi-add-row">+ Agregar actor</button>
+      </div>
+      <div class="hhi-result-wrap">
+        <div class="hhi-stack" id="hhi-stack"></div>
+        <div class="hhi-sum-note" id="hhi-sum-note"></div>
+        <div class="hhi-stat">
+          <div class="hhi-stat-label">HHI calculado</div>
+          <div class="hhi-stat-value" id="hhi-value">0</div>
+        </div>
+        <div class="hhi-badges">
+          <div>
+            <div class="hhi-badge-label">Escala internacional (DOJ/FTC)</div>
+            <span class="badge" id="hhi-badge-generico"><span class="dot"></span><span></span></span>
+          </div>
+          <div>
+            <div class="hhi-badge-label">Escala CNPMDM (Circular 18/2024)</div>
+            <span class="badge" id="hhi-badge-colombia"><span class="dot"></span><span></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORTE Y CUFE -->
+  <section class="view" id="view-cufe">
+    <h2 class="section-title">Reporte de precios y factura electrónica (CUFE)</h2>
+    <p class="section-sub" id="cufe-intro"></p>
+
+    <div class="before-after">
+      <div class="ba-card" id="cufe-antes"></div>
+      <div class="ba-card" id="cufe-despues"></div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:28px;">Por qué importa</h2>
+    <p class="section-sub" id="cufe-porque"></p>
+
+    <h2 class="section-title">Línea de tiempo normativa</h2>
+    <div class="timeline" id="cufe-timeline"></div>
+  </section>
+
   <!-- RETAIL -->
   <section class="view" id="view-retail">
     <h2 class="section-title">Mercado retail (comercial)</h2>
@@ -134,25 +212,26 @@
   <section class="view" id="view-glosario">
     <h2 class="section-title">Glosario</h2>
     <p class="section-sub">Términos clave del sistema de regulación de precios de medicamentos en Colombia.</p>
-    <input type="search" class="glossary-search" id="glosario-search" placeholder="Buscar término (p. ej. UPC, PVL, SISMED)…" />
+    <input type="search" class="glossary-search" id="glosario-search" placeholder="Buscar término (p. ej. UPC, PVL, SISMED, CUFE)…" />
     <dl class="glossary" id="glosario-list"></dl>
   </section>
 
   <!-- REFERENCIAS -->
   <section class="view" id="view-referencias">
     <h2 class="section-title">Referencias</h2>
-    <p class="section-sub">Fuentes oficiales para verificar normativa y cifras vigentes.</p>
-    <ul class="ref-list" id="referencias-list"></ul>
+    <p class="section-sub">Fuentes oficiales para acceder a la normativa vigente, con enlaces verificados. Revisado en julio de 2026 — la CNPMDM actualiza circulares con frecuencia, así que confirme siempre la versión más reciente.</p>
+    <div id="referencias-groups"></div>
   </section>
 
 </main>
 
 <footer class="site">
-  Contenido educativo — Congreso Internacional de Investigaciones, UniNavarra. No constituye asesoría regulatoria.
+  Contenido educativo de divulgación regulatoria. No constituye asesoría legal ni regulatoria — verifique siempre la normativa vigente en las fuentes oficiales citadas.
 </footer>
 
 <script src="js/data.js"></script>
 <script src="js/cascade.js"></script>
+<script src="js/hhi.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

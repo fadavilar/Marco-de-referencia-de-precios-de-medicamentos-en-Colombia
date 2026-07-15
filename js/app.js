@@ -61,13 +61,91 @@ function renderGlosario(filter = "") {
 }
 
 function renderReferencias() {
-  const wrap = document.getElementById("referencias-list");
+  const wrap = document.getElementById("referencias-groups");
   wrap.innerHTML = DATA.referencias
-    .map((r) => {
-      const linkOpen = r.url ? `<a href="${r.url}" target="_blank" rel="noopener">` : `<span>`;
-      const linkClose = r.url ? `</a>` : `</span>`;
-      return `<li>${linkOpen}${r.titulo}${linkClose}<p>${r.nota}</p></li>`;
-    })
+    .map(
+      (group) => `
+      <h3 class="ref-group-title">${group.categoria}</h3>
+      <ul class="ref-list">
+        ${group.items
+          .map((r) => {
+            const linkOpen = r.url ? `<a href="${r.url}" target="_blank" rel="noopener">` : `<span>`;
+            const linkClose = r.url ? `</a>` : `</span>`;
+            return `<li>${linkOpen}${r.titulo}${linkClose}<p>${r.nota}</p></li>`;
+          })
+          .join("")}
+      </ul>`
+    )
+    .join("");
+}
+
+function renderHHIStatic() {
+  const c = DATA.concentracion;
+  document.getElementById("hhi-intro").innerHTML = c.intro;
+
+  document.getElementById("hhi-academico").innerHTML = `
+    <div class="card">
+      <h3>${c.origen.titulo}</h3>
+      <p>${c.origen.texto}</p>
+    </div>
+    <div class="card">
+      <h3>${c.formula.titulo}</h3>
+      <p>${c.formula.texto}</p>
+    </div>
+  `;
+
+  document.getElementById("hhi-umbrales-generico-texto").innerHTML = c.umbralesGenericos.texto;
+  document.getElementById("hhi-umbrales-generico").innerHTML = c.umbralesGenericos.bandas
+    .map(
+      (b) => `
+      <div class="threshold-card ${b.badge}">
+        <span class="badge ${b.badge}"><span class="dot"></span>${b.rango}</span>
+        <p>${b.nombre}</p>
+      </div>`
+    )
+    .join("");
+
+  document.getElementById("hhi-umbrales-colombia-texto").innerHTML = c.umbralesColombia.texto;
+  document.getElementById("hhi-umbrales-colombia").innerHTML = c.umbralesColombia.bandas
+    .map(
+      (b) => `
+      <div class="threshold-card ${b.badge}">
+        <span class="badge ${b.badge}"><span class="dot"></span>${b.rango}</span>
+        <p>${b.nombre}</p>
+      </div>`
+    )
+    .join("");
+  document.getElementById("hhi-umbrales-nota").innerHTML = c.umbralesColombia.nota;
+
+  document.getElementById("hhi-calc-texto").innerHTML = c.calculadora.texto;
+}
+
+function renderCufeStatic() {
+  const d = DATA.reporteCufe;
+  document.getElementById("cufe-intro").innerHTML = d.intro;
+
+  document.getElementById("cufe-antes").innerHTML = `
+    <span class="badge ${d.antes.badge}"><span class="dot"></span>${d.antes.titulo}</span>
+    <ul class="ba-list">${d.antes.puntos.map((p) => `<li>${p}</li>`).join("")}</ul>
+  `;
+  document.getElementById("cufe-despues").innerHTML = `
+    <span class="badge ${d.despues.badge}"><span class="dot"></span>${d.despues.titulo}</span>
+    <ul class="ba-list">${d.despues.puntos.map((p) => `<li>${p}</li>`).join("")}</ul>
+  `;
+
+  document.getElementById("cufe-porque").innerHTML = d.porQueImporta;
+
+  document.getElementById("cufe-timeline").innerHTML = d.hitos
+    .map(
+      (h) => `
+      <div class="timeline-item">
+        <div class="timeline-year">${h.fecha}</div>
+        <div class="timeline-body">
+          <div class="timeline-title">${h.numero}</div>
+          <p>${h.resumen}</p>
+        </div>
+      </div>`
+    )
     .join("");
 }
 
@@ -109,7 +187,6 @@ function initTheme() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.title = DATA.meta.titulo;
-  document.getElementById("brand-title").textContent = DATA.meta.titulo;
   document.getElementById("hero-title").textContent = DATA.meta.titulo;
   document.getElementById("hero-lead").textContent = DATA.meta.subtitulo;
   document.getElementById("marco-intro").innerHTML = DATA.marco.intro;
@@ -118,6 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMarco();
   renderMercado("retail", "retail-intro", "retail-puntos");
   renderMercado("institucional", "institucional-intro", "institucional-puntos");
+  renderHHIStatic();
+  renderCufeStatic();
   renderGlosario();
   renderReferencias();
 
@@ -128,4 +207,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initTheme();
   initCascade();
+  initHHI();
 });
