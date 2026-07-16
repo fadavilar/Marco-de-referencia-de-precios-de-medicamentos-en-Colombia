@@ -21,12 +21,10 @@
       <button data-view="marco">Marco regulatorio</button>
       <button data-view="cascada">Cascada de precios</button>
       <button data-view="concentracion">Concentración (IHH)</button>
-      <button data-view="irp">Guía IRP</button>
+      <button data-view="irp">Guía RIP</button>
       <button data-view="cufe">Reporte y CUFE</button>
       <button data-view="contratacion">Contratación y Pago</button>
       <button data-view="estrategias">Estrategias de pricing</button>
-      <button data-view="retail">Canal Comercial</button>
-      <button data-view="institucional">Canal Institucional</button>
       <button data-view="glosario">Glosario</button>
       <button data-view="referencias">Referencias</button>
     </nav>
@@ -52,7 +50,7 @@
     </div>
 
     <h2 class="section-title" style="margin-top:34px;">¿Qué vas a encontrar aquí?</h2>
-    <p class="section-sub">Nueve maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el comercial.</p>
+    <p class="section-sub">Siete maneras de explorar el mismo sistema de precios, desde el ángulo regulatorio hasta el comercial.</p>
     <div class="card-grid">
       <div class="card">
         <h3>Marco regulatorio</h3>
@@ -60,14 +58,14 @@
       </div>
       <div class="card">
         <h3>Cascada interactiva P1 → P5</h3>
-        <p>Simulador que muestra cómo un precio de manufactura invisible se transforma en precio al consumidor o precio reconocido por el sistema, según canal y régimen.</p>
+        <p>Simulador que muestra cómo un precio de manufactura invisible se transforma en precio al consumidor o precio reconocido por el sistema, según canal y régimen — con el contexto de mercado de cada canal (droguistas y OTC, o IPS/EPS y UPC) integrado en la misma vista.</p>
       </div>
       <div class="card">
         <h3>Concentración de mercado (IHH)</h3>
         <p>El índice de Herfindahl-Hirschman explicado desde su origen académico hasta su uso real en la Circular 18 de 2024 para clasificar mercados. Con calculadora interactiva.</p>
       </div>
       <div class="card">
-        <h3>Guía IRP</h3>
+        <h3>Guía RIP</h3>
         <p>Los 19 países de la canasta de referencia internacional de precios (Circular 18/2024), con enlace a la fuente pública de precios de cada uno.</p>
       </div>
       <div class="card">
@@ -81,14 +79,6 @@
       <div class="card">
         <h3>Estrategias de pricing</h3>
         <p>Apalancamiento de portafolio, notas crédito por cuota de ventas, acuerdos de riesgo compartido y otras estrategias comerciales reales, conectadas al riesgo regulatorio colombiano.</p>
-      </div>
-      <div class="card">
-        <h3>Canal Comercial</h3>
-        <p>Droguistas, medicamentos OTC y gasto de bolsillo: el tramo de la cadena que paga directamente el hogar colombiano.</p>
-      </div>
-      <div class="card">
-        <h3>Canal Institucional</h3>
-        <p>IPS, EPS, UPC y recobros: el tramo financiado por el sistema de salud, con sus propios márgenes de intermediación regulados.</p>
       </div>
     </div>
   </section>
@@ -113,6 +103,7 @@
       Ajusta el canal, el régimen regulatorio y el precio de manufactura (P1) para ver cómo se
       construye el precio a lo largo de la cadena, eslabón por eslabón.
     </p>
+    <p class="section-sub" id="cascada-fuente" style="margin-top:-10px;"></p>
 
     <div class="controls-bar">
       <div class="control-group">
@@ -140,6 +131,10 @@
 
     <h2 class="section-title">Qué significa cada eslabón</h2>
     <div class="stage-detail" id="stage-detail"></div>
+
+    <h2 class="section-title" style="margin-top:28px;" id="cascada-canal-titulo"></h2>
+    <p class="section-sub" id="cascada-canal-intro"></p>
+    <div class="card-grid" id="cascada-canal-puntos"></div>
   </section>
 
   <!-- CONCENTRACIÓN DE MERCADO (IHH) -->
@@ -192,9 +187,9 @@
     </div>
   </section>
 
-  <!-- GUÍA IRP -->
+  <!-- GUÍA RIP -->
   <section class="view" id="view-irp">
-    <h2 class="section-title">Guía de referenciación internacional de precios (IRP)</h2>
+    <h2 class="section-title">Guía de referenciación internacional de precios (RIP)</h2>
     <p class="section-sub" id="irp-intro"></p>
 
     <div class="irp-method-row" id="irp-metodologia"></div>
@@ -224,6 +219,10 @@
 
     <h2 class="section-title">Línea de tiempo normativa</h2>
     <div class="timeline" id="cufe-timeline"></div>
+
+    <h2 class="section-title" style="margin-top:28px;" id="cufe-videos-titulo"></h2>
+    <p class="section-sub" id="cufe-videos-texto"></p>
+    <div class="video-grid" id="cufe-videos-list"></div>
   </section>
 
   <!-- CONTRATACIÓN Y PAGO -->
@@ -231,6 +230,10 @@
     <h2 class="section-title">Contratación y pago en salud</h2>
     <p class="section-sub" id="contratacion-intro"></p>
     <p class="mapa-mental-credit" id="contratacion-mapa-mental"></p>
+
+    <h2 class="section-title" style="margin-top:10px;">Actores del sistema</h2>
+    <p class="section-sub">Cómo entra o sale cada actor de los modelos de contratación descritos abajo.</p>
+    <div class="card-grid" id="contratacion-actores"></div>
 
     <h2 class="section-title" style="margin-top:10px;">Modelos de contratación</h2>
     <div class="card-grid" id="contratacion-modelos"></div>
@@ -265,34 +268,14 @@
     <h2 class="section-title">Estrategias de pricing farmacéutico</h2>
     <p class="section-sub" id="estrategias-intro"></p>
 
-    <div class="channel-section">
-      <h3 class="channel-section-title channel-institucional-title">Canal Institucional</h3>
-      <div class="strategy-list" id="estrategias-list-institucional"></div>
+    <div class="controls-bar">
+      <div class="control-group">
+        <label>Canal</label>
+        <div class="segmented" id="estrategias-canal-toggle"></div>
+      </div>
     </div>
 
-    <div class="channel-section">
-      <h3 class="channel-section-title channel-comercial-title">Canal Comercial</h3>
-      <div class="strategy-list" id="estrategias-list-comercial"></div>
-    </div>
-
-    <div class="channel-section" id="estrategias-ambos-wrap">
-      <h3 class="channel-section-title channel-ambos-title">Ambos canales</h3>
-      <div class="strategy-list" id="estrategias-list-ambos"></div>
-    </div>
-  </section>
-
-  <!-- RETAIL -->
-  <section class="view" id="view-retail">
-    <h2 class="section-title">Canal Comercial (COM)</h2>
-    <p class="section-sub" id="retail-intro"></p>
-    <div class="card-grid" id="retail-puntos"></div>
-  </section>
-
-  <!-- INSTITUCIONAL -->
-  <section class="view" id="view-institucional">
-    <h2 class="section-title">Canal Institucional (INS)</h2>
-    <p class="section-sub" id="institucional-intro"></p>
-    <div class="card-grid" id="institucional-puntos"></div>
+    <div class="strategy-list" id="estrategias-list"></div>
   </section>
 
   <!-- GLOSARIO -->

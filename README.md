@@ -9,7 +9,8 @@ calculadora interactiva, la reforma del reporte SISMED vía **factura electróni
 los dos canales que usa la nomenclatura oficial de SISMED: **Canal Comercial** (droguistas,
 medicamentos OTC, gasto de bolsillo) y **Canal Institucional** (IPS, EPS, UPC, presupuestos
 máximos/recobro y márgenes de intermediación), además de una guía de referenciación
-internacional de precios (IRP) y las estrategias de pricing farmacéutico más usadas en la práctica.
+internacional de precios (RIP, conocida en inglés como IRP) y las estrategias de pricing
+farmacéutico más usadas en la práctica.
 
 ## Usar
 

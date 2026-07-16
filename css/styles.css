@@ -790,6 +790,28 @@ ul.ba-list strong { color: var(--text-primary); }
 .timeline-title a:hover { color: var(--channel-retail); text-decoration-color: var(--channel-retail); }
 .timeline-body p { margin: 3px 0 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
 
+/* ---------- Video cards ---------- */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 14px 0 30px;
+}
+.video-card {
+  display: block;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+.video-card:hover { border-color: var(--channel-retail); }
+.video-thumb { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: var(--surface-2); }
+.video-info { padding: 12px 14px; }
+.video-title { font-size: 13.5px; font-weight: 700; line-height: 1.4; color: var(--text-primary); }
+.video-channel { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
 /* ---------- Contratación y pago: pasos numerados ---------- */
 .steps-card {
   background: var(--surface-card);
@@ -833,17 +855,6 @@ ol.steps-list li::before {
 }
 
 /* ---------- Estrategias de pricing ---------- */
-.channel-section { margin-bottom: 8px; }
-.channel-section-title {
-  font-size: 15px;
-  margin: 26px 0 4px;
-  padding-left: 12px;
-  border-left: 3px solid var(--gridline);
-}
-.channel-section:first-child .channel-section-title { margin-top: 6px; }
-.channel-institucional-title { border-left-color: var(--channel-institucional); }
-.channel-comercial-title { border-left-color: var(--channel-retail); }
-.channel-ambos-title { border-left-color: var(--text-muted); }
 .strategy-list {
   display: flex;
   flex-direction: column;
@@ -868,6 +879,11 @@ ol.steps-list li::before {
   border-radius: 999px;
   padding: 2px 9px;
   margin-bottom: 8px;
+  margin-right: 6px;
+}
+.strategy-tag-ambos {
+  color: var(--text-secondary);
+  border-style: dashed;
 }
 .strategy-head h3 { margin: 0 0 4px; font-size: 16px; }
 .strategy-resumen { margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }

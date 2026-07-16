@@ -144,10 +144,28 @@ function renderCascadeDetail() {
   });
 }
 
+function renderCascadeCanalContext() {
+  const d = cascadeState.canal === "retail" ? DATA.retail : DATA.institucional;
+  const titulo = cascadeState.canal === "retail" ? "Contexto de mercado — Canal Comercial (COM)" : "Contexto de mercado — Canal Institucional (INS)";
+
+  document.getElementById("cascada-canal-titulo").textContent = titulo;
+  document.getElementById("cascada-canal-intro").innerHTML = d.intro;
+  document.getElementById("cascada-canal-puntos").innerHTML = d.puntos
+    .map(
+      (p) => `
+      <div class="card">
+        <h3>${p.titulo}</h3>
+        <p>${p.texto}</p>
+      </div>`
+    )
+    .join("");
+}
+
 function renderAll() {
   renderCascadeControls();
   renderCascadeChart();
   renderCascadeDetail();
+  renderCascadeCanalContext();
 }
 
 function initCascade() {

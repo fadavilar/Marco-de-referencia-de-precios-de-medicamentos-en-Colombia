@@ -24,6 +24,11 @@ const A = {
   circular044_2025: normLink("Circular 044 de 2025", "https://www.minsalud.gov.co/Normatividad_Nuevo/Circular%20Externa%20No%20044%20de%202025.pdf"),
   pisis: normLink("PISIS", "https://www.sispro.gov.co/pisis/Pages/pisis-plataforma-de-integraci%C3%B3n-de-SISPRO.aspx"),
   mipres: normLink("MIPRES", "https://www.minsalud.gov.co/Paginas/Que-es-el-aplicativo-Mipres.aspx"),
+  hirschman1945: normLink("Hirschman (1945)", "https://archive.org/details/nationalpowerstr0000albe"),
+  herfindahl1950: normLink("Herfindahl (1950)", "https://archive.org/details/herfindahl-concentration-in-the-steel-industry-1950-publish"),
+  ftcDoj2023: normLink("Merger Guidelines 2023 (DOJ/FTC)", "https://www.ftc.gov/system/files/ftc_gov/pdf/2023_merger_guidelines_final_12.18.2023.pdf"),
+  whoHai: normLink("Measuring medicine prices... (WHO/HAI, 2ª ed.)", "https://www.who.int/publications/i/item/WHO-PSM-PAR-2008.3"),
+  ventaDirecta: normLink("Proyecto de Implementación del Modelo de Venta Directa para Enfermedades Huérfanas", "https://app.notion.com/p/Proyecto-de-Implementaci-n-del-Modelo-de-Venta-Directa-para-Enfermedades-Huerfanas-2133af0ada608041b475d4d0dc0282c1"),
 };
 
 const DATA = {
@@ -239,6 +244,12 @@ const DATA = {
     en el canal institucional). No representan cifras oficiales de la CNPMDM ni de SISMED:
     para valores reales y vigentes, consulte las fuentes citadas en Referencias.`,
 
+  cascadaFuente: `Este ejercicio de cascada no es una ocurrencia propia: adapta la lógica de
+    <em>desagregación del precio en eslabones de la cadena de distribución</em> que usa la
+    metodología ${A.whoHai}, el estándar internacional para analizar cómo se construye el precio
+    de un medicamento desde el fabricante hasta el paciente. Aquí se aplica esa misma lógica a la
+    estructura específica del mercado colombiano (P1 a P5, canal comercial e institucional).`,
+
   // ---------------------------------------------------------------------
   // CONCENTRACIÓN DE MERCADO — ÍNDICE DE HERFINDAHL-HIRSCHMAN (IHH)
   // ---------------------------------------------------------------------
@@ -251,14 +262,17 @@ const DATA = {
     origen: {
       titulo: "Origen del índice",
       texto: `El índice tiene dos autores independientes que llegaron a la misma fórmula por caminos
-        distintos: el economista <strong>Albert O. Hirschman</strong> lo propuso en 1945, en su libro
-        <em>National Power and the Structure of Foreign Trade</em>, para medir la concentración del
-        comercio exterior de un país. Cinco años después, <strong>Orris C. Herfindahl</strong> llegó
-        a la misma fórmula de manera independiente en su tesis doctoral de 1950 en Columbia
-        University, sobre concentración en la industria siderúrgica de EE. UU. Desde los años 80 es
-        el indicador estándar de las guías de fusiones horizontales del Departamento de Justicia y la
-        FTC de Estados Unidos, y de ahí se extendió a la práctica de competencia y regulación de
-        precios en el resto del mundo, incluida Colombia.`,
+        distintos, y ninguno de los dos trabajaba para un regulador de medicamentos — vale la pena
+        leer el texto original, no solo la circular que lo aplica hoy: el economista
+        <strong>Albert O. Hirschman</strong> lo propuso en ${A.hirschman1945}, en su libro
+        <em>National Power and the Structure of Foreign Trade</em> (texto completo enlazado), para
+        medir la concentración del comercio exterior de un país. Cinco años después,
+        <strong>Orris C. Herfindahl</strong> llegó a la misma fórmula de manera independiente en su
+        tesis doctoral de ${A.herfindahl1950} en Columbia University (también enlazada), sobre
+        concentración en la industria siderúrgica de EE. UU. Desde los años 80 es el indicador
+        estándar de las guías de fusiones horizontales del Departamento de Justicia y la FTC de
+        Estados Unidos, y de ahí se extendió a la práctica de competencia y regulación de precios en
+        el resto del mundo, incluida Colombia.`,
     },
     formula: {
       titulo: "Cómo se calcula",
@@ -269,12 +283,15 @@ const DATA = {
     },
     umbralesGenericos: {
       titulo: "Umbrales de referencia internacional",
-      texto: `Las guías de fusiones de EE. UU. (DOJ/FTC) usan tres bandas orientativas, ampliamente
-        adoptadas en la práctica internacional de competencia:`,
+      texto: `Las bandas de abajo son las de las guías de fusiones horizontales de EE. UU.
+        (DOJ/FTC) de 2010, todavía la referencia más citada en economía y competencia a nivel
+        global. La actualización de ${A.ftcDoj2023} bajó el umbral de "altamente concentrado" a
+        1.800 y puso el foco en el <em>cambio</em> de concentración que genera una fusión, no solo
+        en el nivel absoluto — conviene tenerlo presente si comparas cifras de fuentes distintas:`,
       bandas: [
         { rango: "IHH < 1.500", nombre: "Mercado no concentrado", badge: "good" },
         { rango: "1.500 ≤ IHH < 2.500", nombre: "Moderadamente concentrado", badge: "warning" },
-        { rango: "IHH ≥ 2.500", nombre: "Altamente concentrado", badge: "critical" },
+        { rango: "IHH ≥ 2.500", nombre: "Altamente concentrado (≥ 1.800 bajo las guías vigentes desde 2023)", badge: "critical" },
       ],
     },
     umbralesColombia: {
@@ -310,11 +327,14 @@ const DATA = {
   },
 
   // ---------------------------------------------------------------------
-  // GUÍA DE REFERENCIACIÓN INTERNACIONAL DE PRECIOS (IRP)
+  // GUÍA DE REFERENCIACIÓN INTERNACIONAL DE PRECIOS (RIP — internacionalmente conocida como IRP,
+  // "International Reference Pricing")
   // ---------------------------------------------------------------------
   irp: {
-    intro: `Para los medicamentos bajo <strong>Control Directo</strong>, la CNPMDM no inventa el
-      Precio Techo: lo calcula comparando el precio del medicamento en una <strong>canasta fija de
+    intro: `La <strong>RIP</strong> (Referenciación Internacional de Precios — conocida
+      internacionalmente como <em>IRP, International Reference Pricing</em>) es el mecanismo con el
+      que la CNPMDM fija el Precio Techo de los medicamentos bajo <strong>Control Directo</strong>:
+      no lo inventa, lo calcula comparando el precio del medicamento en una <strong>canasta fija de
       19 países de referencia</strong>, definida en el artículo 6 de la ${A.circular18}. Esta guía
       lista esos 19 países y, para cada uno, un puntero a la fuente pública de precios más
       reconocida — para que puedas verificar de dónde sale, en principio, la referencia.`,
@@ -423,13 +443,24 @@ const DATA = {
       { fecha: "2026", numero: A.circular021, resumen: "Reforma integral del reporte SISMED: exige CUFE y valor bruto de factura. Publicada el 9 de junio de 2026 (Diario Oficial 53.517)." },
       { fecha: "2026", numero: A.circular19_2026, resumen: `Traslada el reporte de medicamentos financiados con UPC al RDA (Resumen Digital de Atención) y deja sin efecto la ${A.circular044_2025}; lo NO-UPC sigue por MIPRES.` },
     ],
+    videos: {
+      titulo: "Videos explicativos de cargue de reportes",
+      texto: `El reporte a SISMED se hace técnicamente a través de ${A.pisis}. Estos videos
+        explican el proceso de validación y cargue — no son material oficial de la CNPMDM, así que
+        conviene contrastarlos contra el anexo técnico vigente de la circular antes de usarlos como
+        única guía:`,
+      items: [
+        { titulo: "Tutorial: Validación y cargue PISIS Sispro", canal: "Salud de Caldas (Secretaría de Salud departamental)", url: "https://www.youtube.com/watch?v=GV_bFpoT3BU", videoId: "GV_bFpoT3BU" },
+        { titulo: "Cómo hacer reportes del SISMED en un hospital de baja complejidad (archivo plano SISPRO)", canal: "Canal independiente — no oficial", url: "https://www.youtube.com/watch?v=Hd9QrXFbXH8", videoId: "Hd9QrXFbXH8" },
+      ],
+    },
   },
 
   // ---------------------------------------------------------------------
   // ESTRATEGIAS DE PRICING FARMACÉUTICO
   // ---------------------------------------------------------------------
   estrategias: {
-    intro: `Frente a un precio de lista vigilado, comparado internacionalmente (IRP) y cada vez más
+    intro: `Frente a un precio de lista vigilado, comparado internacionalmente (RIP) y cada vez más
       auditable factura por factura (${A.circular021}), la industria no negocia solo subiendo o
       bajando ese precio: usa estrategias comerciales que logran el descuento efectivo que el
       mercado exige sin necesariamente mover el precio de lista reportado. Estas diez estrategias
@@ -452,10 +483,10 @@ const DATA = {
           portafolio de este tipo pasaron de involucrar 2 productos a agrupar rutinariamente entre
           10 y 20 en una sola negociación.`,
         colombia: `El precio de lista de la innovadora es justamente el que la CNPMDM usa como
-          insumo para el Precio Techo por comparación internacional (IRP) cuando el mercado está
+          insumo para el Precio Techo por comparación internacional (RIP) cuando el mercado está
           bajo Control Directo. Mantenerlo estable, aunque el descuento real ocurra en la molécula
           madura de la misma canasta, reduce el riesgo de que una baja de precio en Colombia se
-          use como referencia para bajar el precio en otros países de la canasta IRP. En el Canal
+          use como referencia para bajar el precio en otros países de la canasta RIP. En el Canal
           Institucional colombiano, en particular, ese descuento normalmente <strong>no se traslada
           al paciente ni al asegurador como menor costo</strong>: queda dentro del margen del
           intermediario (operador logístico, IPS) y se usa como palanca comercial para posicionar
@@ -600,7 +631,7 @@ const DATA = {
           demanda es más sensible al precio sin sacrificar el precio en mercados que sí pueden
           pagarlo más. Es la lógica detrás de los precios diferenciados de antirretrovirales y
           antibióticos entre países de renta alta y baja.`,
-        colombia: `Es exactamente el mecanismo que la comparación internacional de precios (IRP)
+        colombia: `Es exactamente el mecanismo que la comparación internacional de precios (RIP)
           pone en tensión: si Colombia está en la canasta de países de referencia de otro país con
           mayor renta, un precio bajo negociado aquí por motivos de acceso puede terminar
           exportándose como referencia a la baja en ese otro mercado — un incentivo más para que
@@ -735,6 +766,47 @@ const DATA = {
       titulo: "Sistema de contratación y pago en salud para Colombia (Fabian Dávila, XMind)",
       url: "https://xmind.app/mindmap/sistema-de-contratacion-y-pago-en-salud-para-colombia/cYh46M/?from=gallery",
     },
+    actores: [
+      {
+        nombre: "Industria farmacéutica",
+        rol: "Fabricante o titular del registro sanitario. Fija el precio de manufactura (P1) y negocia portafolio, notas crédito y ARC con el resto de la cadena.",
+        participacion: `Entra a todos los modelos como contraparte: capitación y fee-for-service
+          indirectamente (vía el precio que le vende a la IPS/operador), y directamente en ARC,
+          descuentos por portafolio y descuentos escalonados. En el modelo de venta directa en
+          construcción, puede asumir también la <strong>milla final</strong> — la dispensación del
+          medicamento al paciente — un rol que tradicionalmente no le correspondía.`,
+      },
+      {
+        nombre: "Operador logístico (OPL)",
+        rol: "Administra inventario, almacenamiento y distribución entre el fabricante y el prestador. Es la pieza central del modelo tradicional de intermediación institucional.",
+        participacion: `Es el actor que más cambia según el modelo: en el <strong>modelo
+          tradicional</strong> recibe el pago de la EPS y le paga a la industria, capturando un
+          margen en el camino. En negociaciones de portafolio suele ser parte de la mesa tripartita
+          (EPS–OPL–Farmacéutica). En los pilotos de <strong>giro directo</strong>, su rol se reduce
+          o desaparece para ciertos productos y actores, precisamente porque el pago salta
+          directamente de la EPS o la ADRES a la farmacéutica.`,
+      },
+      {
+        nombre: "IPS (incluye centros de infusión)",
+        rol: "Presta el servicio de salud y dispensa o administra el medicamento al paciente — la milla final tradicional.",
+        participacion: `Participa en capitación (servicios de baja complejidad), fee-for-service
+          (procedimientos) y pago por paquete/canasta. Es también el punto donde tradicionalmente
+          ocurre la dispensación — salvo que, como en el modelo de venta directa en construcción, la
+          farmacéutica asuma esa milla final ella misma. En medicamentos de infusión específicamente,
+          el centro de infusión cumple un doble rol: presta el servicio y, a la vez, funciona como
+          operador o centro de distribución.`,
+      },
+      {
+        nombre: "EPS",
+        rol: "Asegura al afiliado, contrata con IPS y operadores, y paga vía UPC o presupuesto máximo. Es, junto con sus comités, el decisor de compra institucional.",
+        participacion: `Decide con qué modelo de contratación trabaja cada tecnología (capitación,
+          fee-for-service, pago global prospectivo, ARC) y si participa en giro directo o sigue con
+          el modelo tradicional para una molécula o un proveedor determinado. Es la entidad a la que
+          apuntan la mayoría de las estrategias de descuento del Canal Institucional descritas en
+          "Estrategias de pricing", porque es quien controla el contrato con el operador o con la
+          IPS.`,
+      },
+    ],
     modelos: [
       {
         nombre: "Capitación",
@@ -817,22 +889,29 @@ const DATA = {
     },
     transferencias: [
       {
-        nombre: "Giro Indirecto",
+        nombre: "Modelo Tradicional",
         destinatario: "EPS",
-        texto: `Giros basados en la UPC, con retenciones por incumplimiento de hasta el
-          <strong>15%</strong> por criterios de calidad. Opera sobre una plataforma transaccional
-          unificada, con validación previa y avances programados — busca más control, trazabilidad
-          y priorización según criterios predefinidos que un giro genérico a la EPS.`,
+        texto: `Es el nombre correcto de lo que a veces se menciona (de forma imprecisa) como "giro
+          indirecto": giros basados en la UPC hacia la EPS, con retenciones por incumplimiento de
+          hasta el <strong>15%</strong> por criterios de calidad. Opera sobre una plataforma
+          transaccional unificada, con validación previa y avances programados. Sigue siendo, con
+          mucha diferencia, el modelo predominante en el sistema — la EPS recibe el giro y desde ahí
+          contrata y paga a operadores logísticos, IPS y proveedores.`,
       },
       {
-        nombre: "Giro Directo ADRES",
-        destinatario: "IPS o proveedor habilitado",
-        texto: `Transferencia directa desde la ADRES que omite a la EPS como intermediario. Para
-          UPC, aplica cuando la EPS carece de patrimonio técnico adecuado, está bajo vigilancia
-          especial, intervención o liquidación, o se acoge voluntariamente. Para presupuestos
-          máximos, la ADRES gira como mínimo el <strong>80%</strong> directamente a la IPS o al
-          proveedor. El objetivo declarado es reducir la intermediación y dar más trazabilidad al
-          giro.`,
+        nombre: "Giro Directo",
+        destinatario: "IPS, operador logístico o farmacéutica, según el caso",
+        texto: `Transferencia que busca omitir a la EPS como intermediario del pago. Para UPC, la
+          ADRES lo aplica cuando la EPS carece de patrimonio técnico adecuado, está bajo vigilancia
+          especial, intervención o liquidación, o se acoge voluntariamente; para presupuestos
+          máximos, gira como mínimo el <strong>80%</strong> directamente a la IPS o al proveedor.
+          Pero es importante calibrar expectativas: <strong>el giro directo todavía está en
+          construcción</strong>. Hoy opera para algunos actores, en ejercicios acotados y poco
+          difundidos — no es la norma general del sistema. En algunos de esos casos incluye también
+          la <strong>milla final</strong>: la propia farmacéutica asume la dispensación del
+          medicamento al paciente, en vez de que ese paso quede en manos de la IPS o el operador
+          logístico. El ${A.ventaDirecta} (2025), del autor, documenta uno de estos ejercicios
+          aplicado a enfermedades huérfanas.`,
       },
     ],
     privados: [
@@ -871,6 +950,7 @@ const DATA = {
     { termino: "Canal Comercial (COM)", definicion: "Denominación oficial de SISMED para el segmento de mercado en el que los medicamentos se pagan con recursos privados de los agentes (droguerías, venta directa al público). Entre 2008 y 2017 representó, en promedio, cerca del 60% de las ventas reportadas." },
     { termino: "Canal Institucional (INS)", definicion: "Denominación oficial de SISMED para el segmento de mercado en el que las transacciones se cubren con recursos públicos: ventas a IPS, ESE, clínicas, hospitales y EPS." },
     { termino: "Precio Techo / PMV", definicion: `Precio Máximo de Venta fijado por la Comisión para medicamentos bajo Control Directo, calculado por comparación internacional y actualizado periódicamente (p. ej., ${A.circular19}, ${A.circular22}).` },
+    { termino: "RIP (Referenciación Internacional de Precios)", definicion: "Metodología de fijación de precio techo basada en comparar el precio del medicamento en una canasta de países de referencia. Es la traducción correcta al español de lo que internacionalmente se conoce como IRP (International Reference Pricing)." },
     { termino: "Mercado relevante", definicion: "Unidad de análisis que usa la CNPMDM para regular: un principio activo, forma farmacéutica y concentración específicos, agrupados según criterios de sustituibilidad." },
     { termino: "IHH (Índice de Herfindahl-Hirschman)", definicion: `Suma de los cuadrados de las participaciones de mercado (%) de cada actor de un mercado relevante. La ${A.circular18} lo usa como criterio explícito de clasificación en régimen de precios.` },
     { termino: "Libertad Vigilada", definicion: "Régimen general de precios: el mercado fija el precio, la Comisión vigila ex post vía SISMED." },
@@ -886,8 +966,9 @@ const DATA = {
     { termino: "ADRES", definicion: "Administradora de los Recursos del Sistema General de Seguridad Social en Salud: entidad que administra los recursos del sistema, incluidos la UPC, los presupuestos máximos y los recobros." },
     { termino: "PISIS", definicion: `Plataforma de Intercambio de Información de SISPRO: el canal técnico por el que las entidades reportan sus archivos (incluido SISMED) al Ministerio de Salud, con validación de estructura y de calidad del contenido. Más información: ${A.pisis}.` },
     { termino: "ARC (Acuerdo de Riesgo Compartido)", definicion: "Contrato entre pagador y proveedor donde el pago se ajusta según el costo o el resultado clínico real frente a lo esperado; puede ser financiero (control de costos) o basado en resultados clínicos (pago según desempeño)." },
-    { termino: "Giro Directo (ADRES)", definicion: "Transferencia de recursos que la ADRES hace directamente a la IPS o al proveedor, sin pasar por la EPS — obligatorio en ciertos escenarios (EPS sin patrimonio técnico adecuado, en intervención) y, para presupuestos máximos, en al menos el 80% del monto." },
-    { termino: "Giro Indirecto", definicion: "Transferencia de recursos de la UPC hacia la EPS, con retenciones de hasta el 15% por incumplimiento de criterios de calidad, sobre una plataforma transaccional unificada." },
+    { termino: "Giro Directo", definicion: "Transferencia de recursos que la ADRES (u otro pagador) hace directamente a la IPS, operador o farmacéutica, sin pasar por la EPS. Todavía en construcción: opera para algunos actores en ejercicios acotados, no como norma general del sistema; en ciertos casos incluye la milla final (dispensación directa por la farmacéutica)." },
+    { termino: "Modelo Tradicional", definicion: "Transferencia de recursos de la UPC hacia la EPS, con retenciones de hasta el 15% por incumplimiento de criterios de calidad, sobre una plataforma transaccional unificada. Es el nombre correcto del modelo predominante — a veces mencionado, de forma imprecisa, como \"giro indirecto\"." },
+    { termino: "Milla final", definicion: "Último tramo de la cadena antes de que el medicamento llegue al paciente: la dispensación. Tradicionalmente la asume la IPS o la droguería; en los pilotos de giro directo, en algunos casos la asume directamente la farmacéutica." },
     { termino: "Fee for Service", definicion: "Modelo de pago por servicio: se cobra cada procedimiento o evento según una tarifa predefinida (manual de referencia, tarifa negociada o paquete de servicios) — típico de la atención especializada de alta complejidad." },
     { termino: "Margen de intermediación", definicion: "Sobreprecio acumulado por cada capa de la cadena de distribución (distribuidor, operador logístico, IPS) entre el precio de manufactura y el precio final reconocido." },
     { termino: "Gasto de bolsillo (out-of-pocket)", definicion: "Pago que realiza directamente el hogar por medicamentos no cubiertos, excluidos del PBS, o de venta libre (OTC)." },
@@ -895,7 +976,7 @@ const DATA = {
     { termino: "IPS", definicion: "Institución Prestadora de Servicios de Salud: hospitales, clínicas y demás prestadores del Canal Institucional." },
     { termino: "EPS", definicion: "Entidad Promotora de Salud: aseguradora responsable de garantizar el PBS a sus afiliados dentro del SGSSS." },
     { termino: "CUM", definicion: "Código Único de Medicamento: identificador oficial (INVIMA) de cada presentación comercial de un medicamento en Colombia." },
-    { termino: "Precio de lista vs. precio neto", definicion: "El precio de lista es el precio público formal; el precio neto es lo que realmente se paga tras rebates y descuentos, casi siempre confidenciales. La brecha entre ambos crece donde hay comparación internacional de precios (IRP)." },
+    { termino: "Precio de lista vs. precio neto", definicion: "El precio de lista es el precio público formal; el precio neto es lo que realmente se paga tras rebates y descuentos, casi siempre confidenciales. La brecha entre ambos crece donde hay comparación internacional de precios (RIP)." },
     { termino: "Rebate / Nota crédito", definicion: "Descuento retroactivo que un fabricante entrega a un distribuidor o droguista, típicamente por cumplir una meta de ventas, emitido después de la factura original en vez de como una rebaja del precio de lista." },
     { termino: "Portfolio / bundle contracting", definicion: "Negociación de varios productos de un mismo fabricante (moléculas maduras e innovadoras) como un solo paquete, concentrando el descuento en los productos maduros para proteger el precio de lista de las innovadoras." },
     { termino: "Managed Entry Agreement (MEA)", definicion: "Acuerdo entre fabricante y pagador que condiciona el precio o el pago a resultados clínicos (esquema de desempeño) o a un tope de impacto presupuestal (esquema financiero)." },
@@ -931,6 +1012,16 @@ const DATA = {
       items: [
         { titulo: "Circular 18 de 2024 — Normograma INVIMA", nota: "Metodología vigente de clasificación de mercados relevantes por régimen de precios, con el IHH como criterio explícito.", url: "https://normograma.invima.gov.co/compilacion/docs/circular_cnpmd_0018_2024.htm" },
         { titulo: "Circular 19 de 2024 — Normograma INVIMA", nota: "Actualización del Precio Máximo de Venta (Precio Techo) para medicamentos en Control Directo.", url: "https://normograma.invima.gov.co/compilacion/docs/circular_cnpmd_0019_2024.htm" },
+        { titulo: "Hirschman, A. (1945) — National Power and the Structure of Foreign Trade", nota: "Fuente académica original del índice, texto completo (Internet Archive). La CNPMDM no inventó el IHH: lo tomó prestado de la teoría de comercio internacional y la política de competencia.", url: "https://archive.org/details/nationalpowerstr0000albe" },
+        { titulo: "Herfindahl, O. C. (1950) — Concentration in the U.S. Steel Industry", nota: "Tesis doctoral original, Columbia University, texto completo (Internet Archive).", url: "https://archive.org/details/herfindahl-concentration-in-the-steel-industry-1950-publish" },
+        { titulo: "Merger Guidelines 2023 (DOJ/FTC)", nota: "Guías vigentes de fusiones horizontales de EE. UU.; fuente de los umbrales genéricos de concentración de mercado citados en la app.", url: "https://www.ftc.gov/system/files/ftc_gov/pdf/2023_merger_guidelines_final_12.18.2023.pdf" },
+      ],
+    },
+    {
+      categoria: "Metodología del ejercicio de cascada de precios",
+      items: [
+        { titulo: "Measuring medicine prices, availability, affordability and price components (WHO/HAI, 2ª ed., 2008)", nota: "Metodología internacional de referencia para desagregar el precio de un medicamento en los eslabones de su cadena de distribución — base conceptual del ejercicio de cascada P1-P5 de esta app.", url: "https://www.who.int/publications/i/item/WHO-PSM-PAR-2008.3" },
+        { titulo: "HAI — Collecting Evidence on Medicine Prices & Availability", nota: "Página de Health Action International sobre el proyecto y sus encuestas de precios en más de 50 países.", url: "https://haiweb.org/what-we-do/price-availability-affordability/collecting-evidence-on-medicine-prices-availability/" },
       ],
     },
     {
@@ -968,6 +1059,7 @@ const DATA = {
       categoria: "Recursos del autor",
       items: [
         { titulo: "Sistema de contratación y pago en salud para Colombia (mapa mental — Fabian Dávila, XMind)", nota: "Mapa mental original del autor: modelos de contratación, arquitectura de pagos, financiación UPC/NO-UPC y mecanismos de giro. Base de la sección \"Contratación y pago\" de esta app. Elaboración propia, no es una fuente oficial.", url: "https://xmind.app/mindmap/sistema-de-contratacion-y-pago-en-salud-para-colombia/cYh46M/?from=gallery" },
+        { titulo: "Proyecto de Implementación del Modelo de Venta Directa para Enfermedades Huérfanas (Fabian Dávila, 2025)", nota: "Documento estratégico del autor sobre un piloto real de giro directo con milla final en enfermedades huérfanas. Acceso restringido (requiere cuenta de Notion) — citado como respaldo de la descripción del estado actual del giro directo en esta app, no como fuente pública verificable por terceros.", url: "https://app.notion.com/p/Proyecto-de-Implementaci-n-del-Modelo-de-Venta-Directa-para-Enfermedades-Huerfanas-2133af0ada608041b475d4d0dc0282c1" },
       ],
     },
   ],

@@ -29,20 +29,6 @@ function renderMarco() {
     .join("");
 }
 
-function renderMercado(kind, introId, puntosId) {
-  const d = DATA[kind];
-  document.getElementById(introId).innerHTML = d.intro;
-  document.getElementById(puntosId).innerHTML = d.puntos
-    .map(
-      (p) => `
-      <div class="card">
-        <h3>${p.titulo}</h3>
-        <p>${p.texto}</p>
-      </div>`
-    )
-    .join("");
-}
-
 function renderGlosario(filter = "") {
   const wrap = document.getElementById("glosario-list");
   const f = filter.trim().toLowerCase();
@@ -151,6 +137,17 @@ function renderContratacion() {
   document.getElementById("contratacion-intro").innerHTML = c.intro;
   document.getElementById("contratacion-mapa-mental").innerHTML = `${c.mapaMental.texto} <a href="${c.mapaMental.url}" target="_blank" rel="noopener">${c.mapaMental.titulo} ↗</a>`;
 
+  document.getElementById("contratacion-actores").innerHTML = c.actores
+    .map(
+      (a) => `
+      <div class="card">
+        <h3>${a.nombre}</h3>
+        <p><strong>${a.rol}</strong></p>
+        <p>${a.participacion}</p>
+      </div>`
+    )
+    .join("");
+
   document.getElementById("contratacion-modelos").innerHTML = c.modelos
     .map(
       (m) => `
@@ -242,13 +239,29 @@ function renderCufeStatic() {
       </div>`
     )
     .join("");
+
+  document.getElementById("cufe-videos-titulo").textContent = d.videos.titulo;
+  document.getElementById("cufe-videos-texto").innerHTML = d.videos.texto;
+  document.getElementById("cufe-videos-list").innerHTML = d.videos.items
+    .map(
+      (v) => `
+      <a class="video-card" href="${v.url}" target="_blank" rel="noopener">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg" alt="" loading="lazy" />
+        <div class="video-info">
+          <div class="video-title">${v.titulo}</div>
+          <div class="video-channel">${v.canal}</div>
+        </div>
+      </a>`
+    )
+    .join("");
 }
 
-function renderStrategyCard(item) {
+function renderStrategyCard(item, showAmbosTag) {
   return `
     <div class="strategy-card">
       <div class="strategy-head">
         <span class="strategy-tag">${item.categoria}</span>
+        ${showAmbosTag ? `<span class="strategy-tag strategy-tag-ambos">Aplica a ambos canales</span>` : ""}
         <h3>${item.nombre}</h3>
         <p class="strategy-resumen">${item.resumen}</p>
       </div>
@@ -270,23 +283,40 @@ function renderStrategyCard(item) {
     </div>`;
 }
 
+const estrategiasState = { canal: "institucional" };
+
+function renderEstrategiasList() {
+  const e = DATA.estrategias;
+  const items = e.items.filter((item) => item.canal === estrategiasState.canal || item.canal === "ambos");
+  document.getElementById("estrategias-list").innerHTML = items
+    .map((item) => renderStrategyCard(item, item.canal === "ambos"))
+    .join("");
+}
+
+function renderEstrategiasControls() {
+  const wrap = document.getElementById("estrategias-canal-toggle");
+  wrap.innerHTML = "";
+  [
+    { id: "institucional", label: "Canal Institucional" },
+    { id: "comercial", label: "Canal Comercial" },
+  ].forEach(({ id, label }) => {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.className = `canal-${id === "comercial" ? "retail" : id}` + (estrategiasState.canal === id ? " active" : "");
+    btn.addEventListener("click", () => {
+      estrategiasState.canal = id;
+      renderEstrategiasControls();
+      renderEstrategiasList();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
 function renderEstrategias() {
   const e = DATA.estrategias;
   document.getElementById("estrategias-intro").innerHTML = e.intro;
-
-  const porCanal = { institucional: [], comercial: [], ambos: [] };
-  e.items.forEach((item) => porCanal[item.canal].push(item));
-
-  document.getElementById("estrategias-list-institucional").innerHTML = porCanal.institucional.map(renderStrategyCard).join("");
-  document.getElementById("estrategias-list-comercial").innerHTML = porCanal.comercial.map(renderStrategyCard).join("");
-
-  const ambosWrap = document.getElementById("estrategias-ambos-wrap");
-  if (porCanal.ambos.length) {
-    document.getElementById("estrategias-list-ambos").innerHTML = porCanal.ambos.map(renderStrategyCard).join("");
-    ambosWrap.style.display = "";
-  } else {
-    ambosWrap.style.display = "none";
-  }
+  renderEstrategiasControls();
+  renderEstrategiasList();
 }
 
 function initNav() {
@@ -331,10 +361,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("hero-lead").textContent = DATA.meta.subtitulo;
   document.getElementById("marco-intro").innerHTML = DATA.marco.intro;
   document.getElementById("margenes-nota").innerHTML = DATA.margenesNota;
+  document.getElementById("cascada-fuente").innerHTML = DATA.cascadaFuente;
 
   renderMarco();
-  renderMercado("retail", "retail-intro", "retail-puntos");
-  renderMercado("institucional", "institucional-intro", "institucional-puntos");
   renderHHIStatic();
   renderIRP();
   renderCufeStatic();
