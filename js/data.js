@@ -17,6 +17,7 @@ const A = {
   circular17: normLink("Circular 17 de 2023", "https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/circular-0017-2023-cnpmdm.pdf"),
   circular18: normLink("Circular 18 de 2024", "https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/circular-018-de-2024.pdf"),
   circular19: normLink("Circular 19 de 2024", "https://normograma.invima.gov.co/compilacion/docs/circular_cnpmd_0019_2024.htm"),
+  circular020_2026: normLink("Circular 020 de 2026", "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=193012&dt=S"),
   circular22: normLink("Circular 22 de 2026", "https://consultorsalud.com/bajan-los-precios-de-medicamentos-circular-22/"),
   circular021: normLink("Circular 021 de 2026", "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=193381&dt=S"),
   circular19_2026: normLink("Circular 19 de 2026", "https://consultorsalud.com/medicamentos-upc-circular-19-de-2026/"),
@@ -59,11 +60,11 @@ const DATA = {
       },
       {
         titulo: "Precio Techo por comparación internacional",
-        texto: `Para medicamentos bajo Control Directo, el precio máximo de venta (a nivel de manufactura/PVL) se fija tomando como referencia los precios observados en una canasta de países, ajustados por la metodología vigente (${A.circular18}) y actualizados periódicamente (p. ej. ${A.circular19}, ${A.circular22}).`,
+        texto: `Para medicamentos bajo Control Directo, el precio máximo de venta (a nivel de manufactura/PVL) se fija tomando como referencia los precios observados en una canasta de países, ajustados por la metodología vigente (${A.circular18}) y actualizados periódicamente (p. ej. ${A.circular19}, ${A.circular22} — que circuló en consulta pública como "proyecto de Circular 20" antes de expedirse con ese número final).`,
       },
       {
         titulo: "Concentración de mercado",
-        texto: `Desde la ${A.circular18}, la clasificación de cada mercado relevante en un régimen de precios usa explícitamente el Índice de Herfindahl-Hirschman (HHI) calculado con datos de SISMED — ver la sección dedicada "Concentración (HHI)".`,
+        texto: `Desde la ${A.circular18}, la clasificación de cada mercado relevante en un régimen de precios usa explícitamente el Índice de Herfindahl-Hirschman (IHH) calculado con datos de SISMED — ver la sección dedicada "Concentración (IHH)".`,
       },
     ],
     regimenes: [
@@ -75,7 +76,7 @@ const DATA = {
         detalle: `El precio lo fija libremente el productor o importador según condiciones de mercado.
           No hay techo ni fórmula oficial: el control es <em>ex post</em>, mediante el reporte
           obligatorio a SISMED y el monitoreo de la Comisión para detectar señales de falla de
-          mercado. Un mercado relevante con HHI bajo (baja concentración) entra directamente a este
+          mercado. Un mercado relevante con IHH bajo (baja concentración) entra directamente a este
           régimen, sin importar otros criterios.`,
       },
       {
@@ -93,7 +94,7 @@ const DATA = {
         nombre: "Control Directo",
         badge: "critical",
         resumen: "Precio techo fijado por el regulador (comparación internacional).",
-        detalle: `Aplica a mercados relevantes con alta concentración (HHI alto) y/o participaciones
+        detalle: `Aplica a mercados relevantes con alta concentración (IHH alto) y/o participaciones
           de venta elevadas, según la metodología de puntaje de la ${A.circular18}. La Comisión
           fija un <strong>Precio Máximo de Venta (Precio Techo / PMV)</strong> a nivel de
           manufactura por comparación internacional, actualizado periódicamente (la revisión de la
@@ -169,7 +170,10 @@ const DATA = {
         alias: "Precio de distribución institucional",
         visible: false,
         texto: `P1 más el margen del distribuidor u operador logístico institucional que
-          administra el inventario y la entrega a hospitales, clínicas e IPS.`,
+          administra el inventario y la entrega a hospitales, clínicas e IPS. En medicamentos de
+          infusión, el <strong>centro de infusión</strong> suele cumplir este mismo rol de operador
+          o centro de distribución — y añade su propio margen — antes de que el medicamento llegue
+          al paciente.`,
       },
       {
         id: "P3",
@@ -236,10 +240,10 @@ const DATA = {
     para valores reales y vigentes, consulte las fuentes citadas en Referencias.`,
 
   // ---------------------------------------------------------------------
-  // CONCENTRACIÓN DE MERCADO — ÍNDICE DE HERFINDAHL-HIRSCHMAN (HHI)
+  // CONCENTRACIÓN DE MERCADO — ÍNDICE DE HERFINDAHL-HIRSCHMAN (IHH)
   // ---------------------------------------------------------------------
   concentracion: {
-    intro: `El Índice de Herfindahl-Hirschman (HHI) mide qué tan concentrado está un mercado sumando
+    intro: `El Índice de Herfindahl-Hirschman (IHH) mide qué tan concentrado está un mercado sumando
       el cuadrado de la participación (en %) de cada actor que compite en él. En Colombia no es solo
       un concepto de libro de texto: la <strong>${A.circular18}</strong> de la CNPMDM lo usa de
       forma explícita para decidir si un mercado relevante de medicamentos entra en Libertad
@@ -259,29 +263,29 @@ const DATA = {
     formula: {
       titulo: "Cómo se calcula",
       texto: `Se suma el cuadrado de la participación de mercado (en porcentaje, de 0 a 100) de cada
-        actor: <code>HHI = Σ (participación_i)²</code>. Un monopolio puro (un solo actor con 100% del
-        mercado) da HHI = 10.000, el valor máximo. Cuantos más competidores con participaciones
-        similares haya, más bajo el índice — con n actores idénticos, HHI = 10.000 / n.`,
+        actor: <code>IHH = Σ (participación_i)²</code>. Un monopolio puro (un solo actor con 100% del
+        mercado) da IHH = 10.000, el valor máximo. Cuantos más competidores con participaciones
+        similares haya, más bajo el índice — con n actores idénticos, IHH = 10.000 / n.`,
     },
     umbralesGenericos: {
       titulo: "Umbrales de referencia internacional",
       texto: `Las guías de fusiones de EE. UU. (DOJ/FTC) usan tres bandas orientativas, ampliamente
         adoptadas en la práctica internacional de competencia:`,
       bandas: [
-        { rango: "HHI < 1.500", nombre: "Mercado no concentrado", badge: "good" },
-        { rango: "1.500 ≤ HHI < 2.500", nombre: "Moderadamente concentrado", badge: "warning" },
-        { rango: "HHI ≥ 2.500", nombre: "Altamente concentrado", badge: "critical" },
+        { rango: "IHH < 1.500", nombre: "Mercado no concentrado", badge: "good" },
+        { rango: "1.500 ≤ IHH < 2.500", nombre: "Moderadamente concentrado", badge: "warning" },
+        { rango: "IHH ≥ 2.500", nombre: "Altamente concentrado", badge: "critical" },
       ],
     },
     umbralesColombia: {
       titulo: `Los umbrales que usa la CNPMDM (${A.circular18})`,
-      texto: `Para cada mercado relevante, la Comisión calcula el HHI a partir de las ventas
+      texto: `Para cada mercado relevante, la Comisión calcula el IHH a partir de las ventas
         históricas reportadas a SISMED y le asigna un puntaje que alimenta la metodología de
         clasificación en régimen de precios:`,
       bandas: [
-        { rango: "HHI < 2.500", nombre: "Puntaje 1 — entra directo a vigilancia (Libertad Vigilada), sin importar el criterio de participación de ventas", badge: "good" },
-        { rango: "2.500 ≤ HHI < 10.000", nombre: "Puntaje 2 — se combina con el criterio de participación de ventas para definir el régimen", badge: "warning" },
-        { rango: "HHI = 10.000", nombre: "Puntaje 3 — mercado monopólico (un solo actor); mayor probabilidad de terminar en Control Directo", badge: "critical" },
+        { rango: "IHH < 2.500", nombre: "Puntaje 1 — entra directo a vigilancia (Libertad Vigilada), sin importar el criterio de participación de ventas", badge: "good" },
+        { rango: "2.500 ≤ IHH < 10.000", nombre: "Puntaje 2 — se combina con el criterio de participación de ventas para definir el régimen", badge: "warning" },
+        { rango: "IHH = 10.000", nombre: "Puntaje 3 — mercado monopólico (un solo actor); mayor probabilidad de terminar en Control Directo", badge: "critical" },
       ],
       nota: `Los umbrales de puntaje están verificados contra el texto de la ${A.circular18}.
         La regla completa combina este puntaje de concentración con un segundo criterio de
@@ -289,7 +293,7 @@ const DATA = {
         para la metodología integral de asignación de régimen.`,
     },
     calculadora: {
-      titulo: "Calculadora interactiva de HHI",
+      titulo: "Calculadora interactiva de IHH",
       texto: `Ingresa los actores de un mercado relevante ilustrativo (laboratorio/marca) y un valor
         absoluto comparable entre ellos — ventas en pesos, unidades, o cualquier magnitud que tengas
         a mano—. La calculadora totaliza esos valores y calcula la participación (%) de cada actor
@@ -349,12 +353,12 @@ const DATA = {
       { pais: "Estados Unidos", fuente: "Sin regulador único de precios (mercado privado / listas ASP)", url: "" },
       { pais: "Francia", fuente: "Base de Données Publique des Médicaments", url: "https://base-donnees-publique.medicaments.gouv.fr/" },
       { pais: "Grecia", fuente: "Fuente no verificada independientemente — consultar lista de la CNPMDM", url: "" },
-      { pais: "India", fuente: "NPPA — National Pharmaceutical Pricing Authority", url: "https://www.nppaindia.nic.in/" },
+      { pais: "India", fuente: "NPPA — National Pharmaceutical Pricing Authority", url: "https://nppa.gov.in/en" },
       { pais: "Italia", fuente: "AIFA — Agenzia Italiana del Farmaco", url: "https://www.aifa.gov.it/" },
       { pais: "México", fuente: "Comisión Coordinadora para la Negociación de Precios de Medicamentos", url: "https://www.gob.mx/salud/acciones-y-programas/comision-coordinadora-para-la-negociacion-de-precios-de-medicamentos-e-insumos-para-la-salud-91422" },
       { pais: "Noruega", fuente: "Statens legemiddelverk (Agencia Noruega de Medicamentos)", url: "https://www.legemiddelverket.no/" },
       { pais: "Panamá", fuente: "MINSA — Lista Nacional de Medicamento", url: "https://www.minsa.gob.pa/informacion-salud/lista-nacional-de-medicamento" },
-      { pais: "Perú", fuente: "DIGEMID — Observatorio Peruano de Productos Farmacéuticos", url: "https://observatorio.digemid.minsa.gob.pe/" },
+      { pais: "Perú", fuente: "DIGEMID — Observatorio Peruano de Productos Farmacéuticos (vía gob.pe)", url: "https://www.gob.pe/42006-consultar-el-precio-de-los-medicamentos-en-el-observatorio-peruano-de-productos-farmaceuticos-del-digemid" },
       { pais: "Portugal", fuente: "INFARMED", url: "https://www.infarmed.pt/" },
       { pais: "Reino Unido", fuente: "NHS Drug Tariff (NHSBSA)", url: "https://www.nhsbsa.nhs.uk/pharmacies-gp-practices-and-appliance-contractors/drug-tariff" },
       { pais: "Sudáfrica", fuente: "Department of Health — Medicine Price Registry", url: "https://www.health.gov.za/nhi-pee/" },
@@ -412,9 +416,10 @@ const DATA = {
       { fecha: "2016", numero: A.decreto705, resumen: "Crea la CNPMDM al ampliar la Comisión a dispositivos médicos." },
       { fecha: "2018", numero: A.circular06, resumen: `Reglas de reporte a SISMED vigentes hasta 2026 (derogada por la ${A.circular021}).` },
       { fecha: "2023", numero: A.circular17, resumen: `Modifica procedimientos de reporte a SISMED (derogada por la ${A.circular021}).` },
-      { fecha: "2024", numero: A.circular18, resumen: "Fija la metodología vigente de clasificación de mercados relevantes en régimen de precios, con el HHI como criterio explícito." },
+      { fecha: "2024", numero: A.circular18, resumen: "Fija la metodología vigente de clasificación de mercados relevantes en régimen de precios, con el IHH como criterio explícito." },
       { fecha: "2024", numero: A.circular19, resumen: "Actualiza el Precio Máximo de Venta (Precio Techo) de los medicamentos ya sujetos a Control Directo." },
-      { fecha: "2026", numero: A.circular22, resumen: "Una de las revisiones más amplias de precios techo en años: incorpora 33 mercados relevantes nuevos, modifica 22 ya regulados y ajusta 528 mercados por tasa de cambio (-7,4%)." },
+      { fecha: "2026", numero: A.circular020_2026, resumen: `Corrige un yerro del Anexo 1 de la ${A.circular06} (estándar de nombre de archivo para el reporte a SISMED) — un ajuste técnico, no una actualización de precios. Expedida el 13 de enero de 2026.` },
+      { fecha: "2026", numero: A.circular22, resumen: `Una de las revisiones más amplias de precios techo en años: incorpora 33 mercados relevantes nuevos, modifica 22 ya regulados y ajusta 528 mercados por tasa de cambio (-7,4%). Circuló en consulta pública como "proyecto de Circular 20" desde diciembre de 2025.` },
       { fecha: "2026", numero: A.circular021, resumen: "Reforma integral del reporte SISMED: exige CUFE y valor bruto de factura. Publicada el 9 de junio de 2026 (Diario Oficial 53.517)." },
       { fecha: "2026", numero: A.circular19_2026, resumen: `Traslada el reporte de medicamentos financiados con UPC al RDA (Resumen Digital de Atención) y deja sin efecto la ${A.circular044_2025}; lo NO-UPC sigue por MIPRES.` },
     ],
@@ -427,16 +432,17 @@ const DATA = {
     intro: `Frente a un precio de lista vigilado, comparado internacionalmente (IRP) y cada vez más
       auditable factura por factura (${A.circular021}), la industria no negocia solo subiendo o
       bajando ese precio: usa estrategias comerciales que logran el descuento efectivo que el
-      mercado exige sin necesariamente mover el precio de lista reportado. Estas nueve estrategias
-      —documentadas internacionalmente o de práctica habitual en el mercado colombiano— muestran
-      una distinción clave: en el <strong>Canal Institucional</strong>, el descuento casi siempre
-      se queda en el margen del intermediario para influir al decisor de compra, mientras que en el
-      <strong>Canal Comercial</strong> sí suele trasladarse al paciente, porque es él quien decide
-      y paga directamente.`,
+      mercado exige sin necesariamente mover el precio de lista reportado. Estas diez estrategias
+      —documentadas internacionalmente o de práctica habitual en el mercado colombiano— se agrupan
+      abajo por canal, porque el patrón se repite: en el <strong>Canal Institucional</strong>, el
+      descuento casi siempre se queda en el margen del intermediario para influir al decisor de
+      compra; en el <strong>Canal Comercial</strong>, en cambio, sí suele trasladarse al paciente,
+      porque es él quien decide y paga directamente.`,
     items: [
       {
         nombre: "Apalancamiento de portafolio (bundling entre moléculas)",
         categoria: "Portafolio",
+        canal: "institucional",
         resumen: "Se concentra el descuento en una molécula madura del portafolio para proteger el precio de lista de la innovadora.",
         mecanismo: `Un mismo fabricante negocia varios productos —desde una molécula madura o
           genérico propio hasta la innovación más reciente— como un solo paquete o "canasta". El
@@ -454,12 +460,18 @@ const DATA = {
           al paciente ni al asegurador como menor costo</strong>: queda dentro del margen del
           intermediario (operador logístico, IPS) y se usa como palanca comercial para posicionar
           mejor el producto ante el <em>decisor de compra</em> (comité de compras, farmacia
-          institucional), no como un ahorro que el sistema perciba directamente.`,
+          institucional), no como un ahorro que el sistema perciba directamente. En la práctica
+          colombiana, este tipo de acuerdo suele requerir una <strong>negociación tripartita
+          (EPS – Operador Logístico – Farmacéutica)</strong> para pactar tanto el precio como cómo
+          se reparte el margen transferido entre las tres partes; en otros casos, el fabricante y
+          la EPS acuerdan directamente vía <strong>giro directo (EPS–Farma)</strong>, sin que el
+          operador logístico intermedie el pago.`,
         fuente: { titulo: "Portfolio Contracting: The Power Move Reshaping Pharma Access (MMIT)", url: "https://www.mmitnetwork.com/thought-leadership/power-move-reshaping-pharma-access/" },
       },
       {
         nombre: "Precio de lista vs. precio neto (descuentos confidenciales)",
         categoria: "Portafolio",
+        canal: "institucional",
         resumen: "El precio de lista reportado se mantiene alto mientras el precio neto real, tras descuentos confidenciales, es sustancialmente menor.",
         mecanismo: `El fabricante fija un precio de lista público, pero negocia descuentos y
           bonificaciones confidenciales con cada comprador (plano, por volumen o por patrón de uso).
@@ -474,7 +486,8 @@ const DATA = {
       },
       {
         nombre: "Notas crédito por cumplimiento de cuota de ventas",
-        categoria: "Canal Institucional",
+        categoria: "Rebate retroactivo",
+        canal: "institucional",
         resumen: "Planes comerciales que devuelven margen vía nota crédito retroactiva al intermediario, sin que ese descuento se traslade al usuario final.",
         mecanismo: `El fabricante factura al precio de lista, pero ofrece un plan comercial donde,
           si el operador logístico, IPS o distribuidor institucional alcanza una cuota de ventas de
@@ -494,8 +507,28 @@ const DATA = {
         fuente: { titulo: "What is Pharmaceutical Rebate Management? (Enable)", url: "https://www.enable.com/resources/articles/what-is-pharmaceutical-rebate-management/" },
       },
       {
+        nombre: "Descuentos escalonados con llave de cumplimiento por volumen",
+        categoria: "Rebate escalonado",
+        canal: "institucional",
+        resumen: "Varios umbrales de compra sucesivos, cada uno con su propio descuento, negociados molécula por molécula.",
+        mecanismo: `A diferencia de la nota crédito de una sola meta, aquí se pactan
+          <strong>varios escalones de volumen</strong> para una molécula específica — por ejemplo,
+          3%, 6% y 10% de descuento retroactivo al superar el 70%, 90% y 110% de un volumen de
+          referencia. Cada escalón funciona como una "llave" que solo se activa si se cumple el
+          umbral correspondiente, lo que da al fabricante control fino sobre cuánto margen cede
+          según qué tan predecible sea la demanda de esa molécula en particular.`,
+        colombia: `Igual que las notas crédito simples, estos descuentos escalonados suelen
+          quedarse en el margen del intermediario institucional en vez de trasladarse al sistema o
+          al paciente. Su particularidad frente a una nota crédito única es que exige un
+          seguimiento más granular del volumen molécula por molécula — y, otra vez, cada ajuste por
+          escalón cumplido se emite después de la factura original con CUFE, por lo que aplica la
+          misma observación sobre trazabilidad frente a la ${A.circular021}.`,
+        fuente: { titulo: "Best Practices for Managing Pharmaceutical Rebates (IncentX)", url: "https://incentx.com/blog/managing-pharmaceutical-rebates/" },
+      },
+      {
         nombre: "Pague uno, lleve dos / segunda unidad con descuento",
-        categoria: "Canal Comercial",
+        categoria: "Promoción directa",
+        canal: "comercial",
         resumen: "Promociones multi-unidad anunciadas directamente en góndola, que sí trasladan el descuento al consumidor final.",
         mecanismo: `A diferencia de las estrategias institucionales, esta opera directamente sobre
           el paciente: la droguería o cadena anuncia en el punto de venta (góndola, vitrina) una
@@ -511,7 +544,8 @@ const DATA = {
       },
       {
         nombre: "Recompra con empaque (\"traiga la caja\")",
-        categoria: "Canal Comercial",
+        categoria: "Fidelización",
+        canal: "comercial",
         resumen: "Descuento en la siguiente compra a cambio de devolver el empaque vacío, pensado para fidelizar el patrón de consumo del paciente crónico.",
         mecanismo: `El paciente que trae el empaque vacío de su compra anterior recibe un
           descuento o beneficio en la compra siguiente del mismo producto. Es un mecanismo de
@@ -527,6 +561,7 @@ const DATA = {
       {
         nombre: "Acuerdos de riesgo compartido / acceso administrado",
         categoria: "Riesgo compartido",
+        canal: "institucional",
         resumen: "El pago se condiciona a resultados clínicos o a un tope de impacto presupuestal, no a un precio fijo por unidad.",
         mecanismo: `También llamados <em>Managed Entry Agreements</em>: esquemas financieros
           (acuerdos precio-volumen, con techos de gasto) o esquemas de desempeño (pago ligado al
@@ -542,6 +577,7 @@ const DATA = {
       {
         nombre: "Precio diferenciado por indicación",
         categoria: "Segmentación",
+        canal: "institucional",
         resumen: "El mismo medicamento tiene un descuento distinto según la indicación clínica en la que se usa, aunque el precio de lista no cambie.",
         mecanismo: `Cuando un medicamento tiene varias indicaciones aprobadas con distinto valor
           terapéutico o distinta población objetivo, el fabricante aplica descuentos diferentes
@@ -557,6 +593,7 @@ const DATA = {
       {
         nombre: "Precio escalonado por capacidad de pago (tiered pricing)",
         categoria: "Segmentación",
+        canal: "ambos",
         resumen: "El mismo producto se vende a precios distintos según el poder adquisitivo del mercado, sin que un precio bajo en un país erosione el precio en otro.",
         mecanismo: `El fabricante fija precios más bajos en mercados de menor ingreso per cápita y
           precios más altos en mercados de mayor ingreso, buscando maximizar acceso donde la
@@ -573,6 +610,7 @@ const DATA = {
       {
         nombre: "Modelos de suscripción (\"modelo Netflix\")",
         categoria: "Riesgo compartido",
+        canal: "institucional",
         resumen: "Pago fijo periódico que desliga el ingreso del fabricante del volumen vendido, para no incentivar la sobreventa.",
         mecanismo: `Usado sobre todo para antibióticos nuevos: el pagador (un sistema de salud o
           asegurador) paga una suscripción fija que garantiza acceso al medicamento
@@ -643,7 +681,10 @@ const DATA = {
         texto: `Entre el distribuidor y la EPS suele haber una o más capas de intermediación
           (operadores logísticos, gestores farmacéuticos, la propia IPS). Cada capa añade un
           margen: cuantas más capas, mayor el precio acumulado que termina reconociendo el
-          sistema.`,
+          sistema. En medicamentos de infusión, los <strong>centros de infusión</strong> agregan una
+          capa adicional propia — funcionan como operadores o centros de distribución del
+          medicamento, no solo como el sitio donde se administra, y su margen entra en la misma
+          cuenta.`,
       },
       {
         titulo: "Medicamentos bajo Control Directo",
@@ -689,6 +730,11 @@ const DATA = {
       contratación y pago que envuelve al Canal Institucional — modelos de contratación,
       arquitectura de pagos, cómo se financia lo UPC y lo NO-UPC en detalle, y los mecanismos de
       transferencia de recursos entre ADRES, EPS e IPS.`,
+    mapaMental: {
+      texto: "Esta sección adapta el mapa mental original del autor:",
+      titulo: "Sistema de contratación y pago en salud para Colombia (Fabian Dávila, XMind)",
+      url: "https://xmind.app/mindmap/sistema-de-contratacion-y-pago-en-salud-para-colombia/cYh46M/?from=gallery",
+    },
     modelos: [
       {
         nombre: "Capitación",
@@ -826,7 +872,7 @@ const DATA = {
     { termino: "Canal Institucional (INS)", definicion: "Denominación oficial de SISMED para el segmento de mercado en el que las transacciones se cubren con recursos públicos: ventas a IPS, ESE, clínicas, hospitales y EPS." },
     { termino: "Precio Techo / PMV", definicion: `Precio Máximo de Venta fijado por la Comisión para medicamentos bajo Control Directo, calculado por comparación internacional y actualizado periódicamente (p. ej., ${A.circular19}, ${A.circular22}).` },
     { termino: "Mercado relevante", definicion: "Unidad de análisis que usa la CNPMDM para regular: un principio activo, forma farmacéutica y concentración específicos, agrupados según criterios de sustituibilidad." },
-    { termino: "HHI (Índice de Herfindahl-Hirschman)", definicion: `Suma de los cuadrados de las participaciones de mercado (%) de cada actor de un mercado relevante. La ${A.circular18} lo usa como criterio explícito de clasificación en régimen de precios.` },
+    { termino: "IHH (Índice de Herfindahl-Hirschman)", definicion: `Suma de los cuadrados de las participaciones de mercado (%) de cada actor de un mercado relevante. La ${A.circular18} lo usa como criterio explícito de clasificación en régimen de precios.` },
     { termino: "Libertad Vigilada", definicion: "Régimen general de precios: el mercado fija el precio, la Comisión vigila ex post vía SISMED." },
     { termino: "Libertad Regulada", definicion: "Régimen intermedio: el precio lo fija el productor dentro de una metodología o criterios definidos por la Comisión." },
     { termino: "Control Directo", definicion: "Régimen de mayor intervención: la Comisión fija directamente el precio techo, típicamente por comparación internacional." },
@@ -875,6 +921,7 @@ const DATA = {
       items: [
         { titulo: "Circular Externa 021 de 2026 — texto completo", nota: "Reforma del reporte SISMED (CUFE, valor bruto de factura, UMD). Expedida 9 de junio de 2026, Diario Oficial 53.517.", url: "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=193381&dt=S" },
         { titulo: "Circular 06 de 2018 (régimen anterior, derogado)", nota: "Reglas de reporte a SISMED vigentes antes de la Circular 021 de 2026 — útil para comparar el \"antes\".", url: "https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/circular-06-de-2018-cpmdm.pdf" },
+        { titulo: "Circular 020 de 2026 — texto completo", nota: "Corrección técnica al Anexo 1 de la Circular 06/2018 (nomenclatura de archivos de reporte). No actualiza precios — no confundir con el proyecto de circular que sí lo hizo y terminó expedido como Circular 22 de 2026.", url: "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=193012&dt=S" },
         { titulo: "SISMED — Sistema de Información de Precios de Medicamentos (SISPRO)", nota: "Portal del sistema de reporte y consulta de precios.", url: "https://www.sispro.gov.co/central-prestadores-de-servicios/Pages/SISMED-Sistema-de-Informacion-de-Precios-de-Medicamentos.aspx" },
         { titulo: "Consulta pública de precios de medicamentos (Datos Abiertos)", nota: "Dataset abierto con los precios reportados a SISMED en la cadena de comercialización.", url: "https://www.datos.gov.co/Salud-y-Protecci-n-Social/Consulta-p-blica-de-Precios-de-Medicamentos/3he6-m866" },
       ],
@@ -882,7 +929,7 @@ const DATA = {
     {
       categoria: "Metodología de clasificación y concentración de mercado",
       items: [
-        { titulo: "Circular 18 de 2024 — Normograma INVIMA", nota: "Metodología vigente de clasificación de mercados relevantes por régimen de precios, con el HHI como criterio explícito.", url: "https://normograma.invima.gov.co/compilacion/docs/circular_cnpmd_0018_2024.htm" },
+        { titulo: "Circular 18 de 2024 — Normograma INVIMA", nota: "Metodología vigente de clasificación de mercados relevantes por régimen de precios, con el IHH como criterio explícito.", url: "https://normograma.invima.gov.co/compilacion/docs/circular_cnpmd_0018_2024.htm" },
         { titulo: "Circular 19 de 2024 — Normograma INVIMA", nota: "Actualización del Precio Máximo de Venta (Precio Techo) para medicamentos en Control Directo.", url: "https://normograma.invima.gov.co/compilacion/docs/circular_cnpmd_0019_2024.htm" },
       ],
     },

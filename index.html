@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Marco de Referencia de Precios de Medicamentos en Colombia</title>
-<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal comercial e institucional, concentración de mercado (HHI) y la reforma del reporte SISMED vía CUFE." />
+<meta name="description" content="Explorador educativo del marco de política de precios de medicamentos en Colombia: cascada P1-P5, canal comercial e institucional, concentración de mercado (IHH) y la reforma del reporte SISMED vía CUFE." />
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -20,7 +20,7 @@
       <button data-view="inicio" class="active">Inicio</button>
       <button data-view="marco">Marco regulatorio</button>
       <button data-view="cascada">Cascada de precios</button>
-      <button data-view="concentracion">Concentración (HHI)</button>
+      <button data-view="concentracion">Concentración (IHH)</button>
       <button data-view="irp">Guía IRP</button>
       <button data-view="cufe">Reporte y CUFE</button>
       <button data-view="contratacion">Contratación y Pago</button>
@@ -63,7 +63,7 @@
         <p>Simulador que muestra cómo un precio de manufactura invisible se transforma en precio al consumidor o precio reconocido por el sistema, según canal y régimen.</p>
       </div>
       <div class="card">
-        <h3>Concentración de mercado (HHI)</h3>
+        <h3>Concentración de mercado (IHH)</h3>
         <p>El índice de Herfindahl-Hirschman explicado desde su origen académico hasta su uso real en la Circular 18 de 2024 para clasificar mercados. Con calculadora interactiva.</p>
       </div>
       <div class="card">
@@ -142,7 +142,7 @@
     <div class="stage-detail" id="stage-detail"></div>
   </section>
 
-  <!-- CONCENTRACIÓN DE MERCADO (HHI) -->
+  <!-- CONCENTRACIÓN DE MERCADO (IHH) -->
   <section class="view" id="view-concentracion">
     <h2 class="section-title">Concentración de mercado — Índice de Herfindahl-Hirschman</h2>
     <p class="section-sub" id="hhi-intro"></p>
@@ -175,7 +175,7 @@
         <div class="hhi-stack" id="hhi-stack"></div>
         <div class="hhi-sum-note" id="hhi-sum-note"></div>
         <div class="hhi-stat">
-          <div class="hhi-stat-label">HHI calculado</div>
+          <div class="hhi-stat-label">IHH calculado</div>
           <div class="hhi-stat-value" id="hhi-value">0</div>
         </div>
         <div class="hhi-badges">
@@ -197,7 +197,7 @@
     <h2 class="section-title">Guía de referenciación internacional de precios (IRP)</h2>
     <p class="section-sub" id="irp-intro"></p>
 
-    <div class="card-grid" id="irp-metodologia"></div>
+    <div class="irp-method-row" id="irp-metodologia"></div>
 
     <h2 class="section-title" style="margin-top:28px;">Canasta de 19 países y fuentes de precios</h2>
     <div class="irp-table-wrap">
@@ -230,6 +230,7 @@
   <section class="view" id="view-contratacion">
     <h2 class="section-title">Contratación y pago en salud</h2>
     <p class="section-sub" id="contratacion-intro"></p>
+    <p class="mapa-mental-credit" id="contratacion-mapa-mental"></p>
 
     <h2 class="section-title" style="margin-top:10px;">Modelos de contratación</h2>
     <div class="card-grid" id="contratacion-modelos"></div>
@@ -263,7 +264,21 @@
   <section class="view" id="view-estrategias">
     <h2 class="section-title">Estrategias de pricing farmacéutico</h2>
     <p class="section-sub" id="estrategias-intro"></p>
-    <div class="strategy-list" id="estrategias-list"></div>
+
+    <div class="channel-section">
+      <h3 class="channel-section-title channel-institucional-title">Canal Institucional</h3>
+      <div class="strategy-list" id="estrategias-list-institucional"></div>
+    </div>
+
+    <div class="channel-section">
+      <h3 class="channel-section-title channel-comercial-title">Canal Comercial</h3>
+      <div class="strategy-list" id="estrategias-list-comercial"></div>
+    </div>
+
+    <div class="channel-section" id="estrategias-ambos-wrap">
+      <h3 class="channel-section-title channel-ambos-title">Ambos canales</h3>
+      <div class="strategy-list" id="estrategias-list-ambos"></div>
+    </div>
   </section>
 
   <!-- RETAIL -->

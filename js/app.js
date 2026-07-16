@@ -127,9 +127,9 @@ function renderIRP() {
   document.getElementById("irp-metodologia").innerHTML = g.metodologia
     .map(
       (m) => `
-      <div class="card">
-        <h3>${m.titulo}</h3>
-        <p>${m.texto}</p>
+      <div class="info-chip-wrap">
+        <button class="info-chip" type="button">${m.titulo} <span class="info-chip-icon">ⓘ</span></button>
+        <div class="info-tooltip">${m.texto}</div>
       </div>`
     )
     .join("");
@@ -149,6 +149,7 @@ function renderIRP() {
 function renderContratacion() {
   const c = DATA.contratacion;
   document.getElementById("contratacion-intro").innerHTML = c.intro;
+  document.getElementById("contratacion-mapa-mental").innerHTML = `${c.mapaMental.texto} <a href="${c.mapaMental.url}" target="_blank" rel="noopener">${c.mapaMental.titulo} ↗</a>`;
 
   document.getElementById("contratacion-modelos").innerHTML = c.modelos
     .map(
@@ -243,37 +244,49 @@ function renderCufeStatic() {
     .join("");
 }
 
+function renderStrategyCard(item) {
+  return `
+    <div class="strategy-card">
+      <div class="strategy-head">
+        <span class="strategy-tag">${item.categoria}</span>
+        <h3>${item.nombre}</h3>
+        <p class="strategy-resumen">${item.resumen}</p>
+      </div>
+      <div class="strategy-body">
+        <div>
+          <div class="strategy-label">Cómo funciona</div>
+          <p>${item.mecanismo}</p>
+        </div>
+        <div>
+          <div class="strategy-label">En el contexto colombiano</div>
+          <p>${item.colombia}</p>
+        </div>
+      </div>
+      ${
+        item.fuente
+          ? `<a class="strategy-source" href="${item.fuente.url}" target="_blank" rel="noopener">Fuente: ${item.fuente.titulo} ↗</a>`
+          : `<span class="strategy-source strategy-source-observed">Práctica comercial observada en el mercado colombiano — sin cita externa.</span>`
+      }
+    </div>`;
+}
+
 function renderEstrategias() {
   const e = DATA.estrategias;
   document.getElementById("estrategias-intro").innerHTML = e.intro;
 
-  document.getElementById("estrategias-list").innerHTML = e.items
-    .map(
-      (item) => `
-      <div class="strategy-card">
-        <div class="strategy-head">
-          <span class="strategy-tag">${item.categoria}</span>
-          <h3>${item.nombre}</h3>
-          <p class="strategy-resumen">${item.resumen}</p>
-        </div>
-        <div class="strategy-body">
-          <div>
-            <div class="strategy-label">Cómo funciona</div>
-            <p>${item.mecanismo}</p>
-          </div>
-          <div>
-            <div class="strategy-label">En el contexto colombiano</div>
-            <p>${item.colombia}</p>
-          </div>
-        </div>
-        ${
-          item.fuente
-            ? `<a class="strategy-source" href="${item.fuente.url}" target="_blank" rel="noopener">Fuente: ${item.fuente.titulo} ↗</a>`
-            : `<span class="strategy-source strategy-source-observed">Práctica comercial observada en el mercado colombiano — sin cita externa.</span>`
-        }
-      </div>`
-    )
-    .join("");
+  const porCanal = { institucional: [], comercial: [], ambos: [] };
+  e.items.forEach((item) => porCanal[item.canal].push(item));
+
+  document.getElementById("estrategias-list-institucional").innerHTML = porCanal.institucional.map(renderStrategyCard).join("");
+  document.getElementById("estrategias-list-comercial").innerHTML = porCanal.comercial.map(renderStrategyCard).join("");
+
+  const ambosWrap = document.getElementById("estrategias-ambos-wrap");
+  if (porCanal.ambos.length) {
+    document.getElementById("estrategias-list-ambos").innerHTML = porCanal.ambos.map(renderStrategyCard).join("");
+    ambosWrap.style.display = "";
+  } else {
+    ambosWrap.style.display = "none";
+  }
 }
 
 function initNav() {

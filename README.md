@@ -4,7 +4,7 @@ App web autocontenida (HTML/CSS/JS, sin build ni backend) para explorar el marco
 precios de medicamentos en Colombia: marco regulatorio (CNPMDM, SISMED, circulares vigentes,
 regímenes de libertad vigilada / libertad regulada / control directo), una **cascada de precios
 interactiva de 5 eslabones (P1 a P5)** — desde el precio de manufactura, invisible, hasta el
-precio al consumidor final o al sistema —, el **índice de concentración de mercado (HHI)** con
+precio al consumidor final o al sistema —, el **índice de concentración de mercado (IHH)** con
 calculadora interactiva, la reforma del reporte SISMED vía **factura electrónica (CUFE)**, y los
 los dos canales que usa la nomenclatura oficial de SISMED: **Canal Comercial** (droguistas,
 medicamentos OTC, gasto de bolsillo) y **Canal Institucional** (IPS, EPS, UPC, presupuestos
@@ -28,7 +28,7 @@ y visita `http://localhost:8844/`. También funciona con cualquier otro servidor
 - `index.html` — estructura de la app (navegación por pestañas, contenedores para cada sección).
 - `css/styles.css` — paleta de color (modo claro/oscuro) y estilos de todos los componentes.
 - `js/data.js` — todo el contenido editorial: marco regulatorio, definiciones de los 5 eslabones
-  de la cascada por canal, márgenes ilustrativos, concentración de mercado (HHI), reforma CUFE,
+  de la cascada por canal, márgenes ilustrativos, concentración de mercado (IHH), reforma CUFE,
   glosario y referencias. **Este es el archivo a editar si quieres actualizar cifras, textos o
   fuentes.**
 - `js/cascade.js` — lógica de la calculadora de cascada (P1 → P5): renderiza el gráfico y aplica
@@ -52,11 +52,11 @@ Regulada / Control Directo) son **ilustrativos**: buscan mostrar la lógica de l
 mayor intervención regulatoria, menor margen acumulado, especialmente en el canal institucional),
 no reproducir cifras oficiales vigentes. Editables en `DATA.margenes` dentro de `js/data.js`.
 
-## Concentración de mercado (HHI) y reforma CUFE
+## Concentración de mercado (IHH) y reforma CUFE
 
 Dos secciones con contenido verificado contra fuentes oficiales (julio de 2026):
 
-- **Concentración (HHI)**: el Índice de Herfindahl-Hirschman explicado desde su origen académico
+- **Concentración (IHH)**: el Índice de Herfindahl-Hirschman explicado desde su origen académico
   (Hirschman 1945, Herfindahl 1950) hasta su uso real y verificado en la Circular 18 de 2024 de la
   CNPMDM, que lo usa para clasificar mercados relevantes en régimen de precios. Incluye una
   calculadora interactiva.

@@ -1,4 +1,4 @@
-// Calculadora interactiva del Índice de Herfindahl-Hirschman (HHI)
+// Calculadora interactiva del Índice de Herfindahl-Hirschman (IHH)
 // Se ingresan valores absolutos (ventas, unidades, cualquier magnitud comparable);
 // la participación (%) de cada actor se calcula automáticamente como su proporción
 // del total, así que siempre suma 100% por construcción — sin normalización manual.
@@ -21,21 +21,23 @@ function hhiCompute() {
 }
 
 function hhiClassifyGeneric(hhi) {
-  if (hhi < 1500) return { badge: "good", label: "No concentrado (HHI < 1.500)" };
+  if (hhi < 1500) return { badge: "good", label: "No concentrado (IHH < 1.500)" };
   if (hhi < 2500) return { badge: "warning", label: "Moderadamente concentrado (1.500–2.499)" };
-  return { badge: "critical", label: "Altamente concentrado (HHI ≥ 2.500)" };
+  return { badge: "critical", label: "Altamente concentrado (IHH ≥ 2.500)" };
 }
 
 function hhiClassifyColombia(hhi) {
   if (hhi < 2500) return { badge: "good", label: "Puntaje 1 — entra directo a Libertad Vigilada" };
   if (hhi < 10000) return { badge: "warning", label: "Puntaje 2 — se combina con participación de ventas" };
-  return { badge: "critical", label: "Puntaje 3 — mercado monopólico (HHI = 10.000)" };
+  return { badge: "critical", label: "Puntaje 3 — mercado monopólico (IHH = 10.000)" };
 }
 
+// Construye la tabla desde cero — solo cuando cambia el número de filas
+// (init, agregar, quitar). Nunca se llama al teclear un valor: eso destruiría
+// el input activo y el usuario perdería el foco/cursor en cada tecla.
 function hhiRenderTable() {
   const tbody = document.getElementById("hhi-table-body");
   tbody.innerHTML = "";
-  const { shares } = hhiCompute();
 
   hhiRows.forEach((row, i) => {
     const tr = document.createElement("tr");
@@ -59,14 +61,14 @@ function hhiRenderTable() {
     inputValor.className = "hhi-input-valor";
     inputValor.addEventListener("input", (e) => {
       hhiRows[i].valor = parseFloat(e.target.value) || 0;
-      hhiRenderTable();
+      hhiUpdateShareCells();
       hhiRenderResult();
     });
     tdValor.appendChild(inputValor);
 
     const tdShare = document.createElement("td");
     tdShare.className = "hhi-share-cell";
-    tdShare.textContent = shares[i] ? shares[i].toFixed(1) + "%" : "—";
+    tdShare.dataset.rowIndex = String(i);
 
     const tdRemove = document.createElement("td");
     const btnRemove = document.createElement("button");
@@ -86,9 +88,22 @@ function hhiRenderTable() {
     tbody.appendChild(tr);
   });
 
+  hhiUpdateShareCells();
+
   const addBtn = document.getElementById("hhi-add-row");
   addBtn.disabled = hhiRows.length >= HHI_MAX_ROWS;
   addBtn.textContent = hhiRows.length >= HHI_MAX_ROWS ? "Máximo 8 actores" : "+ Agregar actor";
+}
+
+// Solo actualiza el texto de la celda "Participación" de cada fila — no toca
+// los <input>, así que se puede llamar en cada tecla sin robar el foco.
+function hhiUpdateShareCells() {
+  const { shares } = hhiCompute();
+  document.querySelectorAll(".hhi-share-cell").forEach((td) => {
+    const i = Number(td.dataset.rowIndex);
+    const share = shares[i];
+    td.textContent = share ? share.toFixed(1) + "%" : "—";
+  });
 }
 
 function hhiRenderResult() {
@@ -117,7 +132,7 @@ function hhiRenderResult() {
 
   if (total <= 0) {
     resultWrap.classList.add("invalid");
-    sumNote.innerHTML = `Ingresa al menos un valor mayor que cero para calcular el HHI.`;
+    sumNote.innerHTML = `Ingresa al menos un valor mayor que cero para calcular el IHH.`;
     hhiValueEl.textContent = "—";
     genericBadge.className = "badge";
     genericBadge.querySelector("span:last-child").textContent = "Sin datos";
